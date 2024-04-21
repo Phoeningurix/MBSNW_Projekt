@@ -1,4 +1,4 @@
-package de.htw.mbsnw_projekt;
+package de.htw.mbsnw_projekt.ui;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +9,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import de.htw.mbsnw_projekt.R;
 import de.htw.mbsnw_projekt.app.App;
 
 public class MainActivity extends AppCompatActivity {
