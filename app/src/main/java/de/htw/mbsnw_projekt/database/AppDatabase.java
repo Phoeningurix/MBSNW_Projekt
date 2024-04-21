@@ -6,11 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import de.htw.mbsnw_projekt.database.models.*;
+import de.htw.mbsnw_projekt.database.type_converters.LocalDateTimeConverter;
 
 @Database(entities = {Spiel.class, Punkt.class}, version = 1)
+@TypeConverters({LocalDateTimeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase instance;
