@@ -30,6 +30,8 @@ android {
 
 dependencies {
 
+    def room_version = "2.6.1"
+
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
@@ -41,4 +43,17 @@ dependencies {
     // osmdroid
     implementation libs.osmdroid.android
     implementation libs.preference
+
+    // ViewModel
+    implementation libs.lifecycle.viewmodel
+    // LiveData
+    implementation libs.lifecycle.livedata
+    // Annotation processor
+    implementation libs.lifecycle.common.java8
+
+    implementation libs.room.runtime
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    testImplementation libs.room.testing
+    androidTestImplementation libs.room.testing
 }
