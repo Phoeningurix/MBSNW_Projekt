@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity(
         tableName = "ziel",
         indices = @Index(value = {"zielort_id", "spiel_id"}),
+        primaryKeys = {"zielort_id", "zielort_id"},
         foreignKeys = {
                 @ForeignKey(
                         entity = Zielort.class,
@@ -31,11 +32,9 @@ import java.time.LocalDateTime;
 )
 public class Ziel {
 
-    @PrimaryKey
     @ColumnInfo(name = "zielort_id")
     private int zielortId;
 
-    @PrimaryKey
     @ColumnInfo(name = "spiel_id")
     private int spielId;
 
