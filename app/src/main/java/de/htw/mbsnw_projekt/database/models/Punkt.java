@@ -3,6 +3,7 @@ package de.htw.mbsnw_projekt.database.models;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -80,5 +81,17 @@ public class Punkt {
 
     private void setSpielId(int spielId) {
         this.spielId = spielId;
+    }
+
+    @Override
+    @Ignore
+    public String toString() {
+        return "Punkt{" +
+                "id=" + id +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", timestamp=" + timestamp +
+                ", spielId=" + spielId +
+                '}';
     }
 }
