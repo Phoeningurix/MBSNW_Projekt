@@ -9,10 +9,11 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import de.htw.mbsnw_projekt.database.daos.SpielDao;
 import de.htw.mbsnw_projekt.database.models.*;
 import de.htw.mbsnw_projekt.database.type_converters.LocalDateTimeConverter;
 
-@Database(entities = {Spiel.class, Punkt.class}, version = 1)
+@Database(entities = {Spiel.class, Punkt.class, OrtListe.class, Zielort.class, Ziel.class}, version = 1)
 @TypeConverters({LocalDateTimeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -52,5 +53,7 @@ public abstract class AppDatabase extends RoomDatabase {
         t.setDaemon(true);
         t.start();
     }
+
+    public abstract SpielDao spielDao();
 
 }
