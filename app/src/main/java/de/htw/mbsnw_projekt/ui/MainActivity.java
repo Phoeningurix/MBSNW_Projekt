@@ -9,8 +9,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.time.LocalDateTime;
+
 import de.htw.mbsnw_projekt.R;
 import de.htw.mbsnw_projekt.app.App;
+import de.htw.mbsnw_projekt.database.repositories.Repository;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,5 +31,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Log.d(TAG, "onCreate: String: " + App.getAndroidApp().getString(R.string.app_name));
+
+
+        Repository repository = App.getRepository();
+
+        //repository.insert(new Spiel(LocalDateTime.now().minusHours(1), null, 13984632748L, 137485L));
+
+        repository.getAktuellesSpiel(spiel -> Log.d(TAG, "aktuelles Spiel: " + spiel));
+
+        repository.getSpiele().observeForever(spiele -> {
+            Log.d(TAG, "alleSpiele: " + spiele.size());
+            if (spiele.get(0).getEndTimestamp() == null) {
+                spiele.get(0).setEndTimestamp(LocalDateTime.now());
+                repository.update(spiele.get(0));
+            }
+        });
+
     }
 }

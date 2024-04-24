@@ -26,13 +26,13 @@ public interface SpielDao {
     @Query("SELECT * FROM spiel ORDER BY start_timestamp DESC")
     LiveData<List<Spiel>> getSpiele();
 
-    @Query("SELECT * FROM spiel WHERE end_timestamp == null")
+    @Query("SELECT * FROM spiel WHERE end_timestamp IS NULL")
     Spiel getAktuellesSpiel();
 
-    @Query("SELECT * FROM spiel WHERE spiel_id NOT IN (SELECT spiel_id FROM ziel WHERE timestamp == null) AND end_timestamp != null ORDER BY start_timestamp DESC")
+    @Query("SELECT * FROM spiel WHERE spiel_id NOT IN (SELECT spiel_id FROM ziel WHERE timestamp IS NULL) AND end_timestamp IS NOT NULL ORDER BY start_timestamp DESC")
     LiveData<List<Spiel>> getErfolgreicheSpiele();
 
-    @Query("SELECT * FROM spiel WHERE spiel_id IN (SELECT spiel_id FROM ziel WHERE timestamp == null) AND end_timestamp != null ORDER BY start_timestamp DESC")
+    @Query("SELECT * FROM spiel WHERE spiel_id IN (SELECT spiel_id FROM ziel WHERE timestamp IS NULL) AND end_timestamp IS NOT NULL ORDER BY start_timestamp DESC")
     LiveData<List<Spiel>> getNichtErfolgreicheSpiele();
 
 }
