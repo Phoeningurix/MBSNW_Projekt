@@ -62,10 +62,7 @@ public class RepositoryImpl extends AbstractRepository {
 
     @Override
     public void getAktuellesSpiel(Consumer<Spiel> task) {
-        doInBackground(() -> {
-            Spiel spiel = spielDao.getAktuellesSpiel();
-            task.accept(spiel);
-        });
+        doInBackground(() -> spielDao.getAktuellesSpiel(), task);
     }
 
     @Override

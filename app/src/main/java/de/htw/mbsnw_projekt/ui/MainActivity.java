@@ -2,6 +2,7 @@ package de.htw.mbsnw_projekt.ui;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
         //repository.insert(new Spiel(LocalDateTime.now().minusHours(1), null, 13984632748L, 137485L));
 
         repository.getAktuellesSpiel(spiel -> Log.d(TAG, "aktuelles Spiel: " + spiel));
+
+        TextView textView = findViewById(R.id.beispielText);
+
+        repository.getAktuellesSpiel(spiel -> textView.setText(spiel != null ? spiel.toString() : "null"));
 
         repository.getSpiele().observeForever(spiele -> {
             Log.d(TAG, "alleSpiele: " + spiele.size());
