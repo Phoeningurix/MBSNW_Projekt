@@ -27,12 +27,15 @@ public class Zielort {
 
     private double longitude;
 
+    private String name;
+
     @ColumnInfo(name = "ort_liste_id")
     private int ortListeId;
 
-    public Zielort(double latitude, double longitude, int ortListeId) {
+    public Zielort(double latitude, double longitude, String name, int ortListeId) {
         setLatitude(latitude);
         setLongitude(longitude);
+        setName(name);
         setOrtListeId(id);
     }
 
@@ -58,6 +61,14 @@ public class Zielort {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getOrtListeId() {
