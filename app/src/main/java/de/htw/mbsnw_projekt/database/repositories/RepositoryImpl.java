@@ -2,11 +2,14 @@ package de.htw.mbsnw_projekt.database.repositories;
 
 import androidx.lifecycle.LiveData;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Consumer;
 
 import de.htw.mbsnw_projekt.app.App;
+import de.htw.mbsnw_projekt.database.daos.PunktDao;
 import de.htw.mbsnw_projekt.database.daos.SpielDao;
+import de.htw.mbsnw_projekt.database.models.Punkt;
 import de.htw.mbsnw_projekt.database.models.Spiel;
 
 public class RepositoryImpl extends AbstractRepository {
@@ -24,21 +27,32 @@ public class RepositoryImpl extends AbstractRepository {
         return instance;
     }
 
+    //------------------------------------DAOS------------------------------------
     private final SpielDao spielDao;
+    private final PunktDao punktDao;
 
+
+    //------------------------------------LIVE-DATA------------------------------------
     private final LiveData<List<Spiel>> spiele;
     private final LiveData<List<Spiel>> erfolgreicheSpiele;
     private final LiveData<List<Spiel>> nichtErfolgreicheSpiele;
 
+    private final LiveData<List<Punkt>> punkte;
+
+
+
     private RepositoryImpl() {
         spielDao = App.getDatabase().spielDao();
+        punktDao = App.getDatabase().punktDao();
         // TODO: 24.04.2024 Andere Daos hinzufügen
 
         spiele = spielDao.getSpiele();
         erfolgreicheSpiele = spielDao.getErfolgreicheSpiele();
-        nichtErfolgreicheSpiele = getNichtErfolgreicheSpiele();
+        nichtErfolgreicheSpiele = spielDao.getNichtErfolgreicheSpiele();
+        punkte = punktDao.getPunkte();
     }
 
+    //------------------------------------SPIEL------------------------------------
 
     @Override
     public void insert(Spiel spiel) {
@@ -73,5 +87,39 @@ public class RepositoryImpl extends AbstractRepository {
     @Override
     public LiveData<List<Spiel>> getNichtErfolgreicheSpiele() {
         return nichtErfolgreicheSpiele;
+    }
+
+
+
+    //------------------------------------PUNKT------------------------------------
+
+    @Override
+    public void insert(Punkt punkt) {
+        doInBackground(() -> punktDao.insert(punkt));
+    }
+
+    @Override
+    public void update(Punkt punkt) {
+        doInBackground(() -> punktDao.update(punkt));
+    }
+
+    @Override
+    public void delete(Punkt punkt) {
+        doInBackground(() -> punktDao.delete(punkt));
+    }
+
+    @Override
+    public LiveData<List<Punkt>> getSpielPunkte(int spiel_id) {
+        return punktDao.getSpielPunkte(spiel_id);
+    }
+
+    @Override
+    public LiveData<List<Punkt>> getSpielPunkteZeitraum(int spiel_id, LocalDateTime start, LocalDateTime end) {
+        return punktDao.getSpielPunkteZeitraum(spiel_id, start, end);
+    }
+
+    @Override
+    public LiveData<List<Punkt>> getPunkte() {
+        return punkte;
     }
 }
