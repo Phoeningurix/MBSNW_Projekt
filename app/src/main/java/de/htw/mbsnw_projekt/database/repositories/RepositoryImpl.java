@@ -11,6 +11,7 @@ import de.htw.mbsnw_projekt.database.daos.PunktDao;
 import de.htw.mbsnw_projekt.database.daos.SpielDao;
 import de.htw.mbsnw_projekt.database.models.Punkt;
 import de.htw.mbsnw_projekt.database.models.Spiel;
+import de.htw.mbsnw_projekt.database.models.Zielort;
 
 public class RepositoryImpl extends AbstractRepository {
 
@@ -121,5 +122,26 @@ public class RepositoryImpl extends AbstractRepository {
     @Override
     public LiveData<List<Punkt>> getPunkte() {
         return punkte;
+    }
+
+    // TODO: 08.05.2024  
+    @Override
+    public void insert(Zielort zielort) {
+        
+    }
+
+    @Override
+    public void update(Zielort zielort) {
+
+    }
+
+    @Override
+    public void delete(Zielort zielort) {
+
+    }
+
+    @Override
+    public LiveData<List<Zielort>> getAlleZielorte() {
+        return null;
     }
 }

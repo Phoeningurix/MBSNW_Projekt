@@ -40,6 +40,14 @@ public interface Repository {
 
     LiveData<List<Punkt>> getPunkte();
 
+    //------------------------------------ZIELORT------------------------------------
 
+    void insert(Zielort zielort);
+
+    void update(Zielort zielort);
+
+    void delete(Zielort zielort);
+
+    LiveData<List<Zielort>> getAlleZielorte();
 
 }
