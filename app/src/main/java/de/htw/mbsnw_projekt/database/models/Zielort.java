@@ -85,6 +85,7 @@ public class Zielort {
                 "id=" + id +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", name= " + name +
                 ", ortListeId=" + ortListeId +
                 '}';
     }
