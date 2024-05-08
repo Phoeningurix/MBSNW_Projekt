@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 import de.htw.mbsnw_projekt.app.App;
 import de.htw.mbsnw_projekt.database.daos.PunktDao;
 import de.htw.mbsnw_projekt.database.daos.SpielDao;
+import de.htw.mbsnw_projekt.database.daos.ZielortDao;
 import de.htw.mbsnw_projekt.database.models.Punkt;
 import de.htw.mbsnw_projekt.database.models.Spiel;
 import de.htw.mbsnw_projekt.database.models.Zielort;
@@ -32,6 +33,8 @@ public class RepositoryImpl extends AbstractRepository {
     private final SpielDao spielDao;
     private final PunktDao punktDao;
 
+    private final ZielortDao zielortDao;
+
 
     //------------------------------------LIVE-DATA------------------------------------
     private final LiveData<List<Spiel>> spiele;
@@ -40,17 +43,21 @@ public class RepositoryImpl extends AbstractRepository {
 
     private final LiveData<List<Punkt>> punkte;
 
+    private final LiveData<List<Zielort>> zielorte;
+
 
 
     private RepositoryImpl() {
         spielDao = App.getDatabase().spielDao();
         punktDao = App.getDatabase().punktDao();
+        zielortDao = App.getDatabase().zielortDao();
         // TODO: 24.04.2024 Andere Daos hinzufügen
 
         spiele = spielDao.getSpiele();
         erfolgreicheSpiele = spielDao.getErfolgreicheSpiele();
         nichtErfolgreicheSpiele = spielDao.getNichtErfolgreicheSpiele();
         punkte = punktDao.getPunkte();
+        zielorte = zielortDao.getAlleZielorte();
     }
 
     //------------------------------------SPIEL------------------------------------
@@ -91,7 +98,6 @@ public class RepositoryImpl extends AbstractRepository {
     }
 
 
-
     //------------------------------------PUNKT------------------------------------
 
     @Override
@@ -124,24 +130,26 @@ public class RepositoryImpl extends AbstractRepository {
         return punkte;
     }
 
+    //------------------------------------ZIELORT------------------------------------
+
     // TODO: 08.05.2024  
     @Override
     public void insert(Zielort zielort) {
-        
+        doInBackground(() -> zielortDao.insert(zielort));
     }
 
     @Override
     public void update(Zielort zielort) {
-
+        doInBackground(() -> zielortDao.update(zielort));
     }
 
     @Override
     public void delete(Zielort zielort) {
-
+        doInBackground(() -> zielortDao.delete(zielort));
     }
 
     @Override
     public LiveData<List<Zielort>> getAlleZielorte() {
-        return null;
+        return zielorte;
     }
 }
