@@ -17,7 +17,10 @@ public class OrtListe {
 
     private boolean custom;
 
-    public OrtListe(boolean custom) {
+    private String name;
+
+    public OrtListe(boolean custom, String name) {
+        this.name = name;
         setCustom(custom);
     }
 
@@ -43,5 +46,13 @@ public class OrtListe {
                 "id=" + id +
                 ", custom=" + custom +
                 '}';
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
