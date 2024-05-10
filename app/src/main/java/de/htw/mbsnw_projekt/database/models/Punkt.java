@@ -8,6 +8,7 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity(
         tableName = "punkt",
@@ -81,6 +82,14 @@ public class Punkt {
 
     private void setSpielId(int spielId) {
         this.spielId = spielId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Punkt punkt = (Punkt) o;
+        return /* id == punkt.id && */ Double.compare(latitude, punkt.latitude) == 0 && Double.compare(longitude, punkt.longitude) == 0 && spielId == punkt.spielId && Objects.equals(timestamp, punkt.timestamp);
     }
 
     @Override

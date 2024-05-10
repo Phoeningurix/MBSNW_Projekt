@@ -1,5 +1,6 @@
 [versions]
 agp = "8.3.1"
+coreTesting = "2.2.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
@@ -14,6 +15,7 @@ preference = "1.2.1"
 roomRuntime = "2.6.1"
 
 [libraries]
+core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

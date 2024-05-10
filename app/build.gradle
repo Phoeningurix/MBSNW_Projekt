@@ -56,4 +56,6 @@ dependencies {
 
     testImplementation libs.room.testing
     androidTestImplementation libs.room.testing
+
+    androidTestImplementation libs.core.testing
 }
