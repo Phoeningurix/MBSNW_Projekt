@@ -50,4 +50,19 @@ public interface Repository {
 
     LiveData<List<Zielort>> getAlleZielorte();
 
+    //------------------------------------ZIEL------------------------------------
+
+    void insert(Ziel ziel);
+
+    void update(Ziel ziel);
+
+    void delete(Ziel ziel);
+
+    LiveData<List<Ziel>> getSpielZiele(int spielId);
+
+    LiveData<List<Ziel>> getErreichteSpielZiel(int spielId);
+
+    LiveData<List<Ziel>> getNichtErreichteSpielZiele(int spielId);
+
+
 }

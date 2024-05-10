@@ -26,8 +26,6 @@ public interface ZielDao {
     @Query("SELECT * FROM ziel WHERE spiel_id = :spielId")
     LiveData<List<Ziel>> getSpielZiele(int spielId);
 
-    // TODO: 08.05.2024
-
     @Query("SELECT * FROM ziel WHERE spiel_id = :spielId AND timestamp IS NOT NULL ORDER BY reihenfolge")
     LiveData<List<Ziel>> getErreichteSpielZiel(int spielId);
 

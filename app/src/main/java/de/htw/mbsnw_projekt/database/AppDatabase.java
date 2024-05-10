@@ -11,6 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import de.htw.mbsnw_projekt.database.daos.PunktDao;
 import de.htw.mbsnw_projekt.database.daos.SpielDao;
+import de.htw.mbsnw_projekt.database.daos.ZielDao;
 import de.htw.mbsnw_projekt.database.daos.ZielortDao;
 import de.htw.mbsnw_projekt.database.models.*;
 import de.htw.mbsnw_projekt.database.type_converters.LocalDateTimeConverter;
@@ -61,5 +62,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract PunktDao punktDao();
 
     public abstract ZielortDao zielortDao();
+
+    public abstract ZielDao zielDao();
 
 }

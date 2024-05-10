@@ -9,9 +9,11 @@ import java.util.function.Consumer;
 import de.htw.mbsnw_projekt.app.App;
 import de.htw.mbsnw_projekt.database.daos.PunktDao;
 import de.htw.mbsnw_projekt.database.daos.SpielDao;
+import de.htw.mbsnw_projekt.database.daos.ZielDao;
 import de.htw.mbsnw_projekt.database.daos.ZielortDao;
 import de.htw.mbsnw_projekt.database.models.Punkt;
 import de.htw.mbsnw_projekt.database.models.Spiel;
+import de.htw.mbsnw_projekt.database.models.Ziel;
 import de.htw.mbsnw_projekt.database.models.Zielort;
 
 public class RepositoryImpl extends AbstractRepository {
@@ -32,8 +34,8 @@ public class RepositoryImpl extends AbstractRepository {
     //------------------------------------DAOS------------------------------------
     private final SpielDao spielDao;
     private final PunktDao punktDao;
-
     private final ZielortDao zielortDao;
+    private final ZielDao zielDao;
 
 
     //------------------------------------LIVE-DATA------------------------------------
@@ -51,6 +53,8 @@ public class RepositoryImpl extends AbstractRepository {
         spielDao = App.getDatabase().spielDao();
         punktDao = App.getDatabase().punktDao();
         zielortDao = App.getDatabase().zielortDao();
+        zielDao = App.getDatabase().zielDao();
+
         // TODO: 24.04.2024 Andere Daos hinzufügen
 
         spiele = spielDao.getSpiele();
@@ -151,5 +155,38 @@ public class RepositoryImpl extends AbstractRepository {
     @Override
     public LiveData<List<Zielort>> getAlleZielorte() {
         return zielorte;
+    }
+
+    //------------------------------------ZIEL------------------------------------
+
+    @Override
+    public void insert(Ziel ziel) {
+        doInBackground(() -> zielDao.insert(ziel));
+    }
+
+    @Override
+    public void update(Ziel ziel) {
+        doInBackground(() -> zielDao.update(ziel));
+    }
+
+    @Override
+    public void delete(Ziel ziel) {
+        doInBackground(() -> zielDao.delete(ziel));
+    }
+
+    // TODO: 09.05.2024
+    @Override
+    public LiveData<List<Ziel>> getSpielZiele(int spielId) {
+        return null;
+    }
+
+    @Override
+    public LiveData<List<Ziel>> getErreichteSpielZiel(int spielId) {
+        return null;
+    }
+
+    @Override
+    public LiveData<List<Ziel>> getNichtErreichteSpielZiele(int spielId) {
+        return null;
     }
 }
