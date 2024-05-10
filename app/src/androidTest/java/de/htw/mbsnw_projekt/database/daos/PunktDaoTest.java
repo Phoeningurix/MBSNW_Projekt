@@ -40,8 +40,7 @@ public class PunktDaoTest {
     public void testInsertDelete() throws InterruptedException {
         System.out.println("Testing PunktDao");
         Spiel spiel = new Spiel(LocalDateTime.now().minusHours(1), null, 123, 4800_000);
-        db.spielDao().insert(spiel);
-        Spiel actualSpiel = RoomDBTesting.getOrAwaitValue(db.spielDao().getSpiele()).get(0);
+        Spiel actualSpiel = RoomDBTesting.createSpiel(spiel, db);
         System.out.println("Spiel ID: " + spiel.getId());
         System.out.println("Spiel ID after insert: " + actualSpiel.getId());
 
