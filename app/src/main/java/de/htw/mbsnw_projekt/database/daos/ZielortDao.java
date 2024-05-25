@@ -26,4 +26,7 @@ public interface ZielortDao {
     @Query("SELECT * FROM zielort ORDER BY name ASC")
     LiveData<List<Zielort>> getAlleZielorte();
 
+    @Query("SELECT * FROM zielort WHERE zielort_id = :zielortId")
+    Zielort getZielort(int zielortId);
+
 }

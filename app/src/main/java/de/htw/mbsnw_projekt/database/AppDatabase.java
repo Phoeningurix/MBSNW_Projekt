@@ -9,6 +9,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import de.htw.mbsnw_projekt.database.daos.OrtListeDao;
 import de.htw.mbsnw_projekt.database.daos.PunktDao;
 import de.htw.mbsnw_projekt.database.daos.SpielDao;
 import de.htw.mbsnw_projekt.database.daos.ZielDao;
@@ -64,5 +65,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ZielortDao zielortDao();
 
     public abstract ZielDao zielDao();
+
+    public abstract OrtListeDao ortListeDao();
 
 }

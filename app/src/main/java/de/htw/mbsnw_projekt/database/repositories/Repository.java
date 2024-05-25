@@ -26,6 +26,9 @@ public interface Repository {
 
     LiveData<List<Spiel>> getNichtErfolgreicheSpiele();
 
+    void getSpiel(int spielId, Consumer<Spiel> task);
+
+
     //------------------------------------PUNKT------------------------------------
 
     void insert(Punkt punkt);
@@ -50,6 +53,9 @@ public interface Repository {
 
     LiveData<List<Zielort>> getAlleZielorte();
 
+    void getZielort(int zielortId, Consumer<Zielort> task);
+
+
     //------------------------------------ZIEL------------------------------------
 
     void insert(Ziel ziel);
@@ -63,6 +69,29 @@ public interface Repository {
     LiveData<List<Ziel>> getErreichteSpielZiel(int spielId);
 
     LiveData<List<Ziel>> getNichtErreichteSpielZiele(int spielId);
+
+    default void getSpiel(Ziel ziel, Consumer<Spiel> task) {
+        getSpiel(ziel.getSpielId(), task);
+    }
+
+    default void getZielort(Ziel ziel, Consumer<Zielort> task) {
+        getZielort(ziel.getZielortId(), task);
+    }
+
+
+    //------------------------------------ORTLISTE------------------------------------
+
+    void insert(OrtListe ortListe);
+
+    void update(OrtListe ortListe);
+
+    void delete(OrtListe ortListe);
+
+    LiveData<List<OrtListe>> getAllOrtslisten();
+
+    LiveData<List<Zielort>> getAlleZielorte(int ortlisteId);
+
+    void getOrtListe(int zielortId, Consumer<OrtListe> task);
 
 
 }

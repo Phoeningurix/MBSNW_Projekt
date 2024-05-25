@@ -11,6 +11,7 @@ import java.util.List;
 
 import de.htw.mbsnw_projekt.database.models.Ziel;
 
+
 @Dao
 public interface ZielDao {
 
@@ -29,7 +30,7 @@ public interface ZielDao {
     @Query("SELECT * FROM ziel WHERE spiel_id = :spielId AND timestamp IS NOT NULL ORDER BY reihenfolge")
     LiveData<List<Ziel>> getErreichteSpielZiel(int spielId);
 
-    @Query("SELECT * FROM ziel WHERE spiel_id = :spielId AND timestamp IS NULL ORDeR BY reihenfolge")
+    @Query("SELECT * FROM ziel WHERE spiel_id = :spielId AND timestamp IS NULL ORDER BY reihenfolge")
     LiveData<List<Ziel>> getNichtErreichteSpielZiele(int spielId);
 
 

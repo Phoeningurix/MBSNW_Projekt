@@ -35,4 +35,7 @@ public interface SpielDao {
     @Query("SELECT * FROM spiel WHERE spiel_id IN (SELECT spiel_id FROM ziel WHERE timestamp IS NULL) AND end_timestamp IS NOT NULL ORDER BY start_timestamp DESC")
     LiveData<List<Spiel>> getNichtErfolgreicheSpiele();
 
+    @Query("SELECT * FROM spiel WHERE spiel_id = :spielId")
+    Spiel getSpiel(int spielId);
+
 }
