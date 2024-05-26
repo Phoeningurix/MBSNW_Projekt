@@ -1,7 +1,10 @@
 package de.htw.mbsnw_projekt.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -10,11 +13,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.time.LocalDateTime;
 
 import de.htw.mbsnw_projekt.R;
 import de.htw.mbsnw_projekt.app.App;
 import de.htw.mbsnw_projekt.database.repositories.Repository;
+import de.htw.mbsnw_projekt.ui.navigation_drawer.MainMenuActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,13 +47,25 @@ public class MainActivity extends AppCompatActivity {
 
         repository.getAktuellesSpiel(spiel -> textView.setText(spiel != null ? spiel.toString() : "null"));
 
-        repository.getSpiele().observeForever(spiele -> {
+        /*repository.getSpiele().observeForever(spiele -> {
             Log.d(TAG, "alleSpiele: " + spiele.size());
             if (spiele.get(0).getEndTimestamp() == null) {
                 spiele.get(0).setEndTimestamp(LocalDateTime.now());
                 repository.update(spiele.get(0));
             }
+        });*/
+
+        Button button = findViewById(R.id.openMainMenu);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MainMenuActivity.class);
+                startActivity(intent);
+            }
         });
 
     }
+
+
+
 }

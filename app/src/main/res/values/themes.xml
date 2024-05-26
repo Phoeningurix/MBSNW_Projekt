@@ -3,6 +3,16 @@
     <style name="Base.Theme.MBSNW_Projekt" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Primary Color: Green -->
+        <item name="colorPrimary">@color/primaryGreen</item>
+        <item name="colorPrimaryVariant">@color/primaryDarkGreen</item>
+        <item name="colorOnPrimary">@color/primaryLightGreen</item>
+        <!-- Secondary Color: Lime -->
+        <item name="colorSecondary">@color/secondaryLime</item>
+        <item name="colorSecondaryVariant">@color/secondaryDarkLime</item>
+        <item name="colorOnSecondary">@color/secondaryLightLime</item>
+        <!-- Accent Color: Yellow -->
+        <item name="colorAccent">@color/accentYellow</item>
     </style>
 
     <style name="Theme.MBSNW_Projekt" parent="Base.Theme.MBSNW_Projekt" />

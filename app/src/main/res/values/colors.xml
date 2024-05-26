@@ -2,4 +2,21 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="green">#426942</color>
+
+    <!-- Primary color: Grün -->
+    <color name="primaryGreen">#4CAF59</color>
+    <color name="primaryDarkGreen">#286540</color>
+    <color name="primaryLightGreen">#C8E6C9</color>
+
+    <!-- Secondary color: Hellgrün -->
+    <color name="secondaryLime">#8BC34A</color>
+    <color name="secondaryDarkLime">#3E7527</color>
+    <color name="secondaryLightLime">#DCEDC8</color>
+
+    <!-- Accent color: Gelb -->
+    <color name="accentYellow">#FFEB3B</color>
+    <color name="accentDarkYellow">#E6AE23</color>
+    <color name="accentLightYellow">#FFF9C4</color>
+
 </resources>
