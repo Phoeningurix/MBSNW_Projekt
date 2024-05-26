@@ -14,8 +14,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
+import java.time.LocalDateTime;
+
 import de.htw.mbsnw_projekt.R;
 import de.htw.mbsnw_projekt.app.App;
+import de.htw.mbsnw_projekt.database.models.Spiel;
 import de.htw.mbsnw_projekt.database.repositories.Repository;
 import de.htw.mbsnw_projekt.ui.navigation_drawer.MainMenuActivity;
 
@@ -47,13 +50,16 @@ public class MainActivity extends AppCompatActivity {
 
         repository.getAktuellesSpiel(spiel -> textView.setText(spiel != null ? spiel.toString() : "null"));
 
-        /*repository.getSpiele().observeForever(spiele -> {
+        repository.getSpiele().observeForever(spiele -> {
             Log.d(TAG, "alleSpiele: " + spiele.size());
-            if (spiele.get(0).getEndTimestamp() == null) {
-                spiele.get(0).setEndTimestamp(LocalDateTime.now());
-                repository.update(spiele.get(0));
+            for (Spiel spiel : spiele) {
+                if (spiel.getEndTimestamp() == null) {
+                    spiel.setEndTimestamp(LocalDateTime.now());
+                    repository.update(spiel);
+                }
             }
-        });*/
+
+        });
 
         Button button = findViewById(R.id.openMainMenu);
         button.setOnClickListener(new View.OnClickListener() {
