@@ -132,6 +132,11 @@ public class RepositoryImpl extends AbstractRepository {
     }
 
     @Override
+    public LiveData<Punkt> getLatestPunkt(int spiel_id) {
+        return punktDao.getLatestPunkt(spiel_id);
+    }
+
+    @Override
     public LiveData<List<Punkt>> getSpielPunkteZeitraum(int spiel_id, LocalDateTime start, LocalDateTime end) {
         return punktDao.getSpielPunkteZeitraum(spiel_id, start, end);
     }

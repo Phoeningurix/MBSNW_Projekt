@@ -39,6 +39,8 @@ public interface Repository {
 
     LiveData<List<Punkt>> getSpielPunkte(int spiel_id);
 
+    LiveData<Punkt> getLatestPunkt(int spiel_id);
+
     LiveData<List<Punkt>> getSpielPunkteZeitraum(int spiel_id, LocalDateTime start, LocalDateTime end);
 
     LiveData<List<Punkt>> getPunkte();

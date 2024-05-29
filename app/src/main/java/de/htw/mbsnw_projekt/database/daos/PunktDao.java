@@ -27,6 +27,9 @@ public interface PunktDao {
     @Query("SELECT * FROM punkt WHERE spiel_id = :spiel_id")
     LiveData<List<Punkt>> getSpielPunkte(int spiel_id);
 
+    @Query("SELECT * FROM punkt WHERE spiel_id = :spiel_id ORDER BY timestamp DESC LIMIT 1")
+    LiveData<Punkt> getLatestPunkt(int spiel_id);
+
     @Query("SELECT * FROM punkt WHERE spiel_id = :spiel_id AND timestamp >= :start AND timestamp < :end")
     LiveData<List<Punkt>> getSpielPunkteZeitraum(int spiel_id, LocalDateTime start, LocalDateTime end);
 
