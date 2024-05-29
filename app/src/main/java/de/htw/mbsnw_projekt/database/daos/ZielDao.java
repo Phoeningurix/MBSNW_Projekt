@@ -24,13 +24,13 @@ public interface ZielDao {
     @Delete
     void delete(Ziel ziel);
 
-    @Query("SELECT * FROM ziel WHERE spiel_id = :spielId")
+    @Query("SELECT * FROM ziel WHERE spiel_id = :spielId ORDER BY reihenfolge ASC")
     LiveData<List<Ziel>> getSpielZiele(int spielId);
 
-    @Query("SELECT * FROM ziel WHERE spiel_id = :spielId AND timestamp IS NOT NULL ORDER BY reihenfolge")
+    @Query("SELECT * FROM ziel WHERE spiel_id = :spielId AND timestamp IS NOT NULL ORDER BY reihenfolge ASC")
     LiveData<List<Ziel>> getErreichteSpielZiel(int spielId);
 
-    @Query("SELECT * FROM ziel WHERE spiel_id = :spielId AND timestamp IS NULL ORDER BY reihenfolge")
+    @Query("SELECT * FROM ziel WHERE spiel_id = :spielId AND timestamp IS NULL ORDER BY reihenfolge ASC")
     LiveData<List<Ziel>> getNichtErreichteSpielZiele(int spielId);
 
 
