@@ -50,15 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
         repository.getAktuellesSpiel(spiel -> textView.setText(spiel != null ? spiel.toString() : "null"));
 
-        repository.getSpiele().observeForever(spiele -> {
-            Log.d(TAG, "alleSpiele: " + spiele.size());
+        repository.getSpiele().observe(this, spiele -> {
+            Log.d(TAG, "Setting Endtimestamp of all games");
             for (Spiel spiel : spiele) {
                 if (spiel.getEndTimestamp() == null) {
                     spiel.setEndTimestamp(LocalDateTime.now());
                     repository.update(spiel);
                 }
             }
-
         });
 
         Button button = findViewById(R.id.openMainMenu);

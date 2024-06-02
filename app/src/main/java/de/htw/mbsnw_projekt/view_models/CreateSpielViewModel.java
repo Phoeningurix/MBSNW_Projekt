@@ -24,8 +24,8 @@ public class CreateSpielViewModel extends ViewModel {
         if (spiel.getEndTimestamp() != null) {
             Log.e(TAG, "createSpiel: hat schon ein EndTimeStamp");
         }
-        repository.insert(spiel);
-        repository.getAktuellesSpiel(taskAfter);
+        repository.insert(spiel, () -> repository.getAktuellesSpiel(taskAfter));
+
     }
 
 }

@@ -2,6 +2,7 @@ package de.htw.mbsnw_projekt.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -19,6 +20,7 @@ import de.htw.mbsnw_projekt.database.models.Spiel;
 import de.htw.mbsnw_projekt.view_models.CreateSpielViewModel;
 
 public class CreateSpielActivity extends AppCompatActivity {
+    private static final String TAG = "CreateSpielActivity";
 
     // TODO: 02.06.2024 Spiel Einstellungen Input
     Button createSpielButton;
@@ -44,9 +46,10 @@ public class CreateSpielActivity extends AppCompatActivity {
     private void onCreateSpielButtonClicked(View view) {
         Spiel neuesSpiel = new Spiel(LocalDateTime.now(), null, 0, 3_600_000);
         viewModel.createSpiel(neuesSpiel, erstelltesSpiel -> {
+            Log.d(TAG, "onCreateSpielButtonClicked: Erstelltes Spiel: " + erstelltesSpiel);
             Intent intent = new Intent(CreateSpielActivity.this, SpielActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putParcelable("aktuellesSpiel", neuesSpiel);
+            bundle.putParcelable("aktuellesSpiel", erstelltesSpiel);
             intent.putExtra("spielBundle", bundle);
             startActivity(intent);
         });

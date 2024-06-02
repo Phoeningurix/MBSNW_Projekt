@@ -13,6 +13,7 @@ public interface Repository {
     //------------------------------------SPIEL------------------------------------
 
     void insert(Spiel spiel);
+    void insert(Spiel spiel, Runnable after);
 
     void update(Spiel spiel);
 

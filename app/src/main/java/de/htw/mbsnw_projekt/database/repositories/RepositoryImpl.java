@@ -75,6 +75,14 @@ public class RepositoryImpl extends AbstractRepository {
     }
 
     @Override
+    public void insert(Spiel spiel, Runnable after) {
+        doInBackground(
+                () -> spielDao.insert(spiel),
+                after
+        );
+    }
+
+    @Override
     public void update(Spiel spiel) {
         doInBackground(() -> spielDao.update(spiel));
     }

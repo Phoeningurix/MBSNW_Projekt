@@ -18,8 +18,12 @@ public abstract class AbstractRepository implements Repository {
         handler = new Handler(Looper.getMainLooper());
     }
 
-    protected void doInBackground(Runnable r) {
-        Thread t = new Thread(r);
+    protected void doInBackground(Runnable... runnables) {
+        Thread t = new Thread(() -> {
+            for (Runnable r : runnables) {
+                r.run();
+            }
+        });
         t.setDaemon(true);
         t.start();
     }

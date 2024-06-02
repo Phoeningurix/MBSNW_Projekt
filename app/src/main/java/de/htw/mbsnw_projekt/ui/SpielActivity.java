@@ -2,7 +2,9 @@ package de.htw.mbsnw_projekt.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -13,11 +15,16 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.time.LocalDateTime;
+
 import de.htw.mbsnw_projekt.R;
+import de.htw.mbsnw_projekt.app.App;
 import de.htw.mbsnw_projekt.database.models.Spiel;
 import de.htw.mbsnw_projekt.view_models.SpielViewModel;
 
 public class SpielActivity extends AppCompatActivity {
+
+    private static final String TAG = "SpielActivity";
 
     TextView zielCounter;
     SpielViewModel viewModel;
@@ -50,6 +57,17 @@ public class SpielActivity extends AppCompatActivity {
         }).get(SpielViewModel.class);
 
         zielCounter = findViewById(R.id.ziel_counter);
+
+        Toast.makeText(this, "Aktuelles Spiel: " + aktuellesSpiel, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onCreate: Aktuelles Spiel: " + aktuellesSpiel);
+
+        App.getRepository().getSpiele().observeForever(spiele -> {
+            Log.d(TAG, "alleSpiele: " + spiele.size());
+            for (Spiel s : spiele) {
+                Log.d(TAG, "onCreate: spiel:" + s);
+            }
+
+        });
 
 
     }

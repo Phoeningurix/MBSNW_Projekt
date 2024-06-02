@@ -19,6 +19,7 @@ import org.w3c.dom.Text;
 
 import de.htw.mbsnw_projekt.R;
 import de.htw.mbsnw_projekt.database.models.Spiel;
+import de.htw.mbsnw_projekt.ui.CreateSpielActivity;
 import de.htw.mbsnw_projekt.ui.MainActivity;
 import de.htw.mbsnw_projekt.ui.SpielActivity;
 import de.htw.mbsnw_projekt.view_models.HomeViewModel;
@@ -64,8 +65,7 @@ public class HomeFragment extends Fragment {
 
     private void onStartClicked(View view) {
         //Toast.makeText(view.getContext(), "Start new Game", Toast.LENGTH_SHORT).show();
-        // TODO: 02.06.2024 temporär
-        Intent intent = new Intent(getActivity(), SpielActivity.class);
+        Intent intent = new Intent(getActivity(), CreateSpielActivity.class);
         Bundle bundle = new Bundle();
 
         startActivity(intent);
