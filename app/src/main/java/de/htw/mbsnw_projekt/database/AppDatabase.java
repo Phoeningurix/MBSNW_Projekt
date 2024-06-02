@@ -17,7 +17,7 @@ import de.htw.mbsnw_projekt.database.daos.ZielortDao;
 import de.htw.mbsnw_projekt.database.models.*;
 import de.htw.mbsnw_projekt.database.type_converters.LocalDateTimeConverter;
 
-@Database(entities = {Spiel.class, Punkt.class, OrtListe.class, Zielort.class, Ziel.class}, version = 1)
+@Database(entities = {Spiel.class, Punkt.class, OrtListe.class, Zielort.class, Ziel.class}, version = 2)
 @TypeConverters({LocalDateTimeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 

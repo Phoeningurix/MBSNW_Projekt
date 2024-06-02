@@ -8,17 +8,39 @@
     tools:context=".ui.SpielActivity">
 
     <TextView
+        android:id="@+id/ziel_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ziel_counter"
-        android:padding="10dp"
-        android:text="1 / 5"
+        android:layout_margin="10dp"
+        android:text="Ziel"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <TextView
+        android:id="@+id/ziel_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="1 / 5"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ziel_name" />
+
+    <Button
+        android:id="@+id/next_ziel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nächstes Ziel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="30dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

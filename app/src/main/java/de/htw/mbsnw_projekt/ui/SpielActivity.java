@@ -3,6 +3,8 @@ package de.htw.mbsnw_projekt.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +31,11 @@ public class SpielActivity extends AppCompatActivity {
     private GameLogic gameLogic;
 
     TextView zielCounter;
+    TextView zielName;
     SpielViewModel viewModel;
+
+    Button nextZiel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +67,8 @@ public class SpielActivity extends AppCompatActivity {
         }).get(SpielViewModel.class);
 
         zielCounter = findViewById(R.id.ziel_counter);
+        zielName = findViewById(R.id.ziel_name);
+        nextZiel = findViewById(R.id.next_ziel);
 
         Toast.makeText(this, "Aktuelles Spiel: " + aktuellesSpiel, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onCreate: Aktuelles Spiel: " + aktuellesSpiel);
@@ -78,5 +86,21 @@ public class SpielActivity extends AppCompatActivity {
             zielCounter.setText(text);
         });
 
+        viewModel.getAktuellenZielort().observe(this, zielort -> {
+            if (zielort != null) {
+                zielName.setText(zielort.getName());
+            } else {
+                zielName.setText("Ziel");
+                Log.d(TAG, "onCreate: getAktuellenZielort gibt null zurück.");
+            }
+        });
+
+        nextZiel.setOnClickListener(this::onNextZielButtonClicked);
+
     }
+
+    private void onNextZielButtonClicked(View view) {
+        viewModel.finishAktuellesZiel();
+    }
+
 }

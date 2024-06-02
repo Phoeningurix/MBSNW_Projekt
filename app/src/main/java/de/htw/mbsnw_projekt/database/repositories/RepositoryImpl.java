@@ -181,6 +181,11 @@ public class RepositoryImpl extends AbstractRepository {
         doInBackground(() -> zielortDao.getZielort(zielortId), task);
     }
 
+    @Override
+    public LiveData<Zielort> getAktuellenZielort(int spielId) {
+        return zielortDao.getAktuellenZielort(spielId);
+    }
+
     //------------------------------------ZIEL------------------------------------
 
     @Override
@@ -211,6 +216,11 @@ public class RepositoryImpl extends AbstractRepository {
     @Override
     public LiveData<List<Ziel>> getNichtErreichteSpielZiele(int spielId) {
         return zielDao.getNichtErreichteSpielZiele(spielId);
+    }
+
+    @Override
+    public LiveData<Ziel> getAktuellesZiel(int spielId) {
+        return zielDao.getAktuellesZiel(spielId);
     }
 
     //------------------------------------Ortliste------------------------------------

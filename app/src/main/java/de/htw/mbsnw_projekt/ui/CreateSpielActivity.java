@@ -74,6 +74,7 @@ public class CreateSpielActivity extends AppCompatActivity {
         // TODO: 02.06.2024 Ziele aus spezifischen Ortlisten
         repository.getAlleZielorte().observe(this, zielorte -> {
             Random r = new Random();
+            Log.d(TAG, "zieleErstellen: Erstelle " + anzahl + " Ziele aus Liste mit " + zielorte.size() + " Zielen");
             for (int i = 0; i < anzahl; i++) {
                 if (zielorte.isEmpty()) {
                     Log.w(TAG, "zieleErstellen: Zu wenige Zielorte!");

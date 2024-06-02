@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Entity(
         tableName = "ziel",
         indices = @Index(value = {"zielort_id", "spiel_id"}),
-        primaryKeys = {"zielort_id", "zielort_id"},
+        primaryKeys = {"zielort_id", "spiel_id"},
         foreignKeys = {
                 @ForeignKey(
                         entity = Zielort.class,

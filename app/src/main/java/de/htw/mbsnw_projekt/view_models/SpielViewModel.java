@@ -3,21 +3,33 @@ package de.htw.mbsnw_projekt.view_models;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import de.htw.mbsnw_projekt.app.App;
 import de.htw.mbsnw_projekt.database.models.Spiel;
 import de.htw.mbsnw_projekt.database.models.Ziel;
+import de.htw.mbsnw_projekt.database.models.Zielort;
 import de.htw.mbsnw_projekt.database.repositories.Repository;
 
 public class SpielViewModel extends ViewModel {
 
     private final Spiel aktuellesSpiel;
+    private Ziel aktuellesZielObj;
     private final Repository repository;
+
+    private final LiveData<List<Ziel>> spielZiele;
+    private final LiveData<Ziel> aktuellesZiel;
+    private final LiveData<Zielort> aktuellerZielort;
 
     public SpielViewModel(Spiel aktuellesSpiel) {
         this.aktuellesSpiel = aktuellesSpiel;
         repository = App.getRepository();
+        spielZiele = repository.getSpielZiele(aktuellesSpiel.getId());
+        aktuellesZiel = repository.getAktuellesZiel(aktuellesSpiel.getId());
+        aktuellerZielort = repository.getAktuellenZielort(aktuellesSpiel.getId());
+
+        aktuellesZiel.observeForever(ziel -> aktuellesZielObj = ziel);
     }
 
     public Spiel getAktuellesSpiel() {
@@ -25,8 +37,22 @@ public class SpielViewModel extends ViewModel {
     }
 
     public LiveData<List<Ziel>> getSpielZiele() {
-        return repository.getSpielZiele(aktuellesSpiel.getId());
+        return spielZiele;
     }
 
+    public LiveData<Ziel> getAktuellesZiel() {
+        return aktuellesZiel;
+    }
 
+    public LiveData<Zielort> getAktuellenZielort() {
+        return aktuellerZielort;
+    }
+
+    public void finishAktuellesZiel() {
+        if (aktuellesZielObj != null) {
+            aktuellesZielObj.setTimestamp(LocalDateTime.now());
+            repository.update(aktuellesZielObj);
+        }
+
+    }
 }

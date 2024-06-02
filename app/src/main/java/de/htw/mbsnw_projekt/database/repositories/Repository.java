@@ -56,6 +56,8 @@ public interface Repository {
 
     LiveData<List<Zielort>> getAlleZielorte();
 
+    LiveData<Zielort> getAktuellenZielort(int spielId);
+
     void getZielort(int zielortId, Consumer<Zielort> task);
 
 
@@ -72,6 +74,8 @@ public interface Repository {
     LiveData<List<Ziel>> getErreichteSpielZiel(int spielId);
 
     LiveData<List<Ziel>> getNichtErreichteSpielZiele(int spielId);
+
+    LiveData<Ziel> getAktuellesZiel(int spielId);
 
     default void getSpiel(Ziel ziel, Consumer<Spiel> task) {
         getSpiel(ziel.getSpielId(), task);

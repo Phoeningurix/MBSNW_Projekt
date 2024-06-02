@@ -9,6 +9,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import de.htw.mbsnw_projekt.database.models.Ziel;
 import de.htw.mbsnw_projekt.database.models.Zielort;
 
 @Dao
@@ -28,5 +29,10 @@ public interface ZielortDao {
 
     @Query("SELECT * FROM zielort WHERE zielort_id = :zielortId")
     Zielort getZielort(int zielortId);
+
+    @Query("SELECT zielort.* FROM zielort, ziel  WHERE ziel.zielort_id = zielort.zielort_id AND ziel.spiel_id = :spielId AND ziel.timestamp IS NULL ORDER BY ziel.reihenfolge ASC LIMIT 1")
+    LiveData<Zielort> getAktuellenZielort(int spielId);
+
+
 
 }

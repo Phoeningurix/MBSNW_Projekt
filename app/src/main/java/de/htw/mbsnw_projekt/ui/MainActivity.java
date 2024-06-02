@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         //repository.insert(new OrtListe(false, "Testorte"));
         //repository.insert(new Zielort(52.455100, 13.524743, "HTW Ufer", 1));
         //repository.insert(new Zielort(52.545587, 13.423519, "Käthe-Kollwitz-Gymnasium", 1));
+        //repository.insert(new Zielort(52.543908, 13.424302, "Falafel Aladdin", 1));
 
         repository.getAlleZielorte().observe(this, zielorts -> {
             Log.d(TAG, "onCreate: Anzahl Zielorte: " + zielorts.size());

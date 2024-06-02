@@ -33,5 +33,10 @@ public interface ZielDao {
     @Query("SELECT * FROM ziel WHERE spiel_id = :spielId AND timestamp IS NULL ORDER BY reihenfolge ASC")
     LiveData<List<Ziel>> getNichtErreichteSpielZiele(int spielId);
 
+    @Query("SELECT * FROM ziel WHERE spiel_id = :spielId AND timestamp IS NULL ORDER BY reihenfolge ASC LIMIT 1")
+    LiveData<Ziel> getAktuellesZiel(int spielId);
+
+
+
 
 }
