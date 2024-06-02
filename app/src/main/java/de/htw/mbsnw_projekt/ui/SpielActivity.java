@@ -20,11 +20,13 @@ import java.time.LocalDateTime;
 import de.htw.mbsnw_projekt.R;
 import de.htw.mbsnw_projekt.app.App;
 import de.htw.mbsnw_projekt.database.models.Spiel;
+import de.htw.mbsnw_projekt.logic.GameLogic;
 import de.htw.mbsnw_projekt.view_models.SpielViewModel;
 
 public class SpielActivity extends AppCompatActivity {
 
     private static final String TAG = "SpielActivity";
+    private GameLogic gameLogic;
 
     TextView zielCounter;
     SpielViewModel viewModel;
@@ -46,6 +48,8 @@ public class SpielActivity extends AppCompatActivity {
             spiel = bundle.getParcelable("aktuellesSpiel");
         }
         final Spiel aktuellesSpiel = spiel;
+
+        gameLogic = App.getGameLogic();
 
         viewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
             /** @noinspection unchecked*/
@@ -69,6 +73,10 @@ public class SpielActivity extends AppCompatActivity {
 
         });
 
+        viewModel.getSpielZiele().observe(this, list -> {
+            String text = (gameLogic.getCurrentZielIndex(list) + 1) + " / " + list.size();
+            zielCounter.setText(text);
+        });
 
     }
 }

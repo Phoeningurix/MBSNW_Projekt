@@ -36,7 +36,7 @@ public class Zielort {
         setLatitude(latitude);
         setLongitude(longitude);
         setName(name);
-        setOrtListeId(id);
+        setOrtListeId(ortListeId);
     }
 
     public int getId() {

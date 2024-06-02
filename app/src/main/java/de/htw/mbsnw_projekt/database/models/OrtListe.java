@@ -44,6 +44,7 @@ public class OrtListe {
     public String toString() {
         return "OrtListe{" +
                 "id=" + id +
+                ", name=" + name +
                 ", custom=" + custom +
                 '}';
     }

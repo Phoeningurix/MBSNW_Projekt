@@ -12,13 +12,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.LiveData;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import de.htw.mbsnw_projekt.R;
 import de.htw.mbsnw_projekt.app.App;
+import de.htw.mbsnw_projekt.database.models.OrtListe;
 import de.htw.mbsnw_projekt.database.models.Spiel;
+import de.htw.mbsnw_projekt.database.models.Zielort;
 import de.htw.mbsnw_projekt.database.repositories.Repository;
 import de.htw.mbsnw_projekt.ui.navigation_drawer.MainMenuActivity;
 
@@ -68,6 +72,27 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //repository.insert(new OrtListe(false, "Testorte"));
+        //repository.insert(new Zielort(52.455100, 13.524743, "HTW Ufer", 1));
+        //repository.insert(new Zielort(52.545587, 13.423519, "Käthe-Kollwitz-Gymnasium", 1));
+
+        repository.getAlleZielorte().observe(this, zielorts -> {
+            Log.d(TAG, "onCreate: Anzahl Zielorte: " + zielorts.size());
+            for (Zielort zielort : zielorts) {
+                Log.d(TAG, "onCreate: Zielort: " + zielort);
+            }
+        });
+
+        repository.getAllOrtslisten().observe(this, ortListes -> {
+            Log.d(TAG, "onCreate: Anzahl Ortlisten: " + ortListes.size());
+            for (OrtListe ortListe : ortListes) {
+                Log.d(TAG, "onCreate: Ortliste: " + ortListe);
+            }
+        });
+
+
+
 
     }
 
