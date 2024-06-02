@@ -1,10 +1,13 @@
 package de.htw.mbsnw_projekt.view_models;
 
+import android.widget.TextView;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.function.Consumer;
 
 import de.htw.mbsnw_projekt.app.App;
 import de.htw.mbsnw_projekt.database.models.Spiel;
@@ -54,5 +57,10 @@ public class SpielViewModel extends ViewModel {
             repository.update(aktuellesZielObj);
         }
 
+    }
+    
+    public void setUpCountDown(Consumer<Long> updateTextView) {
+        // TODO: 02.06.2024 Countdown
+        // https://stackoverflow.com/questions/10032003/how-to-make-a-countdown-timer-in-android
     }
 }

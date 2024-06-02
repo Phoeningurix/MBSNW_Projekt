@@ -97,6 +97,9 @@ public class SpielActivity extends AppCompatActivity {
 
         nextZiel.setOnClickListener(this::onNextZielButtonClicked);
 
+        // TODO: 02.06.2024 Set Countdown TextView
+        viewModel.setUpCountDown(millisLeft -> zielCounter.setText("Time Left: " + (millisLeft / 1000)));
+
     }
 
     private void onNextZielButtonClicked(View view) {
