@@ -19,9 +19,15 @@
         android:theme="@style/Theme.MBSNW_Projekt"
         tools:targetApi="31">
         <activity
-            android:name=".ui.navigation_drawer.MainMenuActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".ui.CreateSpielActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.SpielActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.navigation_drawer.MainMenuActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">

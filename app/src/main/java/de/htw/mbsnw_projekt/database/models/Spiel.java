@@ -1,5 +1,9 @@
 package de.htw.mbsnw_projekt.database.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -9,11 +13,13 @@ import androidx.room.PrimaryKey;
 
 import java.time.LocalDateTime;
 
+import de.htw.mbsnw_projekt.database.type_converters.LocalDateTimeConverter;
+
 @Entity(
         tableName = "spiel",
         indices = @Index(value = "spiel_id")
 )
-public class Spiel {
+public class Spiel implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "spiel_id")
@@ -89,4 +95,40 @@ public class Spiel {
                 ", timeLimit=" + timeLimit +
                 '}';
     }
+
+    @Ignore
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Ignore
+    @Override
+    public void writeToParcel(@NonNull Parcel out, int flags) {
+        out.writeInt(id);
+        out.writeString(LocalDateTimeConverter.localDateTimeToString(startTimestamp));
+        out.writeString(LocalDateTimeConverter.localDateTimeToString(endTimestamp));
+        out.writeLong(seed);
+        out.writeLong(timeLimit);
+    }
+
+    private Spiel(Parcel in) {
+        id = in.readInt();
+        startTimestamp = LocalDateTimeConverter.localDateTimeFromString(in.readString());
+        endTimestamp = LocalDateTimeConverter.localDateTimeFromString(in.readString());
+        seed = in.readLong();
+        timeLimit = in.readLong();
+    }
+
+    public static final Creator<Spiel> CREATOR = new Creator<Spiel>() {
+        @Override
+        public Spiel createFromParcel(Parcel in) {
+            return new Spiel(in);
+        }
+
+        @Override
+        public Spiel[] newArray(int size) {
+            return new Spiel[size];
+        }
+    };
 }
