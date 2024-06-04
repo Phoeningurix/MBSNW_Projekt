@@ -7,6 +7,8 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import org.osmdroid.util.GeoPoint;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -103,4 +105,11 @@ public class Punkt {
                 ", spielId=" + spielId +
                 '}';
     }
+
+
+    @Ignore
+    public GeoPoint toGeopoint() {
+        return new GeoPoint(latitude, longitude);
+    }
+
 }

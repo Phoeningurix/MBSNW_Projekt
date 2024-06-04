@@ -22,6 +22,7 @@ import de.htw.mbsnw_projekt.database.models.Spiel;
 import de.htw.mbsnw_projekt.database.models.Ziel;
 import de.htw.mbsnw_projekt.database.models.Zielort;
 import de.htw.mbsnw_projekt.database.repositories.Repository;
+import de.htw.mbsnw_projekt.logic.MapPainterImpl;
 
 public class SpielViewModel extends ViewModel {
     private static final String TAG = "SpielViewModel";
@@ -82,7 +83,6 @@ public class SpielViewModel extends ViewModel {
 
 
         new CountDownTimer(spielDauer - diff, 1000) {
-
             public void onTick(long millisUntilFinished) {
                 updateTextView.accept(millisUntilFinished);
             }

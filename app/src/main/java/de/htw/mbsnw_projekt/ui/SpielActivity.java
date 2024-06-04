@@ -17,12 +17,16 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.views.MapView;
+
 import java.time.LocalDateTime;
 
 import de.htw.mbsnw_projekt.R;
 import de.htw.mbsnw_projekt.app.App;
 import de.htw.mbsnw_projekt.database.models.Spiel;
 import de.htw.mbsnw_projekt.logic.GameLogic;
+import de.htw.mbsnw_projekt.logic.MapPainterImpl;
 import de.htw.mbsnw_projekt.view_models.SpielViewModel;
 
 public class SpielActivity extends AppCompatActivity {
@@ -30,9 +34,11 @@ public class SpielActivity extends AppCompatActivity {
     private static final String TAG = "SpielActivity";
     private GameLogic gameLogic;
 
-    TextView zielCounter;
-    TextView zielName;
-    SpielViewModel viewModel;
+    private TextView zielCounter;
+    private TextView zielName;
+    private SpielViewModel viewModel;
+
+    private MapView map;
 
     TextView timer;
 
@@ -107,5 +113,6 @@ public class SpielActivity extends AppCompatActivity {
     private void onNextZielButtonClicked(View view) {
         viewModel.finishAktuellesZiel();
     }
+
 
 }
