@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,9 @@ import de.htw.mbsnw_projekt.view_models.HomeViewModel;
 
 public class HomeFragment extends Fragment {
 
+    Button startButton, resumeButton;
     private HomeViewModel viewModel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,14 +45,20 @@ public class HomeFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         TextView textView = view.findViewById(R.id.blubtext);
-        Button startButton = view.findViewById(R.id.startGameButton);
-        Button resumeButton = view.findViewById(R.id.resumeGameButton);
+        startButton = view.findViewById(R.id.startGameButton);
+        resumeButton = view.findViewById(R.id.resumeGameButton);
 
         startButton.setOnClickListener(this::onStartClicked);
         resumeButton.setOnClickListener(this::onResumeClicked);
 
         viewModel.getAktuellesSpiel(spiel -> textView.setText(spiel == null ? "null" : spiel.toString()));
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         viewModel.existiertAktuellesSpiel(
                 () -> {
                     startButton.setVisibility(View.INVISIBLE);
@@ -60,19 +69,22 @@ public class HomeFragment extends Fragment {
                     resumeButton.setVisibility(View.INVISIBLE);
                 }
         );
-
     }
 
     private void onStartClicked(View view) {
         //Toast.makeText(view.getContext(), "Start new Game", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), CreateSpielActivity.class);
-        Bundle bundle = new Bundle();
-
         startActivity(intent);
     }
 
     private void onResumeClicked(View view) {
-        Toast.makeText(view.getContext(), "Resume Game", Toast.LENGTH_SHORT).show();
+        viewModel.getAktuellesSpiel(aktuellesSpiel -> {
+            Intent intent = new Intent(getActivity(), SpielActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("aktuellesSpiel", aktuellesSpiel);
+            intent.putExtra("spielBundle", bundle);
+            startActivity(intent);
+        });
     }
 
 

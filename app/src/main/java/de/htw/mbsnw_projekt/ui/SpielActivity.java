@@ -34,6 +34,8 @@ public class SpielActivity extends AppCompatActivity {
     TextView zielName;
     SpielViewModel viewModel;
 
+    TextView timer;
+
     Button nextZiel;
 
     @Override
@@ -69,6 +71,7 @@ public class SpielActivity extends AppCompatActivity {
         zielCounter = findViewById(R.id.ziel_counter);
         zielName = findViewById(R.id.ziel_name);
         nextZiel = findViewById(R.id.next_ziel);
+        timer = findViewById(R.id.timer);
 
         Toast.makeText(this, "Aktuelles Spiel: " + aktuellesSpiel, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onCreate: Aktuelles Spiel: " + aktuellesSpiel);
@@ -98,7 +101,8 @@ public class SpielActivity extends AppCompatActivity {
         nextZiel.setOnClickListener(this::onNextZielButtonClicked);
 
         // TODO: 02.06.2024 Set Countdown TextView
-        viewModel.setUpCountDown(millisLeft -> zielCounter.setText("Time Left: " + (millisLeft / 1000)));
+
+        viewModel.setUpCountDown(millisLeft -> timer.setText(viewModel.millisToString(millisLeft)));
 
     }
 

@@ -57,7 +57,7 @@ public class CreateSpielActivity extends AppCompatActivity {
 
     private void onCreateSpielButtonClicked(View view) {
         // TODO: 02.06.2024 read setting from textfields
-        Spiel neuesSpiel = new Spiel(LocalDateTime.now(), null, 0, 3_600_000);
+        Spiel neuesSpiel = new Spiel(LocalDateTime.now(), null, 0, 7_200_000);
         viewModel.createSpiel(neuesSpiel, erstelltesSpiel -> {
             zieleErstellen(erstelltesSpiel, anzahlZiele);
 
