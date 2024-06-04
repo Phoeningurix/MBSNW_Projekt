@@ -1,7 +1,9 @@
 package de.htw.mbsnw_projekt.view_models;
 
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -22,6 +24,7 @@ import de.htw.mbsnw_projekt.database.models.Zielort;
 import de.htw.mbsnw_projekt.database.repositories.Repository;
 
 public class SpielViewModel extends ViewModel {
+    private static final String TAG = "SpielViewModel";
 
     private final Spiel aktuellesSpiel;
     private Ziel aktuellesZielObj;
@@ -86,6 +89,7 @@ public class SpielViewModel extends ViewModel {
 
             public void onFinish() {
                 updateTextView.accept(0L);
+                Log.d(TAG, "onFinish: Game ended");
             }
 
         }.start();
