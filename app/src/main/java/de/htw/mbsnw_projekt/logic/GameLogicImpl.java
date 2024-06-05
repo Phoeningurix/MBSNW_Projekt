@@ -1,7 +1,10 @@
 package de.htw.mbsnw_projekt.logic;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import de.htw.mbsnw_projekt.database.models.Spiel;
 import de.htw.mbsnw_projekt.database.models.Ziel;
@@ -38,12 +41,17 @@ public class GameLogicImpl implements GameLogic {
         return -1;
     }
 
-    // TODO: 02.06.2024 Implementierung
     @Override
     public long getTimeLeft(Spiel spiel) {
-        return 0;
+        long spielDauer = spiel.getTimeLimit();
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime start = spiel.getStartTimestamp();
+        long diff = ChronoUnit.MILLIS.between(start, now);
+        return spielDauer - diff;
     }
 
+    // TODO: 02.06.2024 Implementierung
     @Override
     public void spielBeenden(Spiel spiel) {
 
@@ -52,6 +60,17 @@ public class GameLogicImpl implements GameLogic {
     @Override
     public void setZielReached(Ziel ziel) {
 
+    }
+
+    public String millisToString(long millis) {
+
+        long zeit = millis / 1000;
+
+        long sekunden = zeit % 60;
+        long minuten = Math.floorDiv(zeit, 60L) % 60;
+        long stunden = Math.floorDiv(zeit, 3600L);
+
+        return String.format(Locale.GERMAN, "%02d", stunden) + ":" + String.format(Locale.GERMAN, "%02d", minuten) + ":" + String.format(Locale.GERMAN, "%02d", sekunden);
     }
 
 

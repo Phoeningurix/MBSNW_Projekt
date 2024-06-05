@@ -15,6 +15,8 @@ public interface GameLogic {
 
     void setZielReached(Ziel ziel);
 
+    String millisToString(long millis);
+
 
 
 

@@ -106,7 +106,7 @@ public class SpielActivity extends AppCompatActivity {
 
         nextZiel.setOnClickListener(this::onNextZielButtonClicked);
 
-        viewModel.setUpCountDown(millisLeft -> timer.setText(viewModel.millisToString(millisLeft)));
+        viewModel.setUpCountDown(millisLeft -> timer.setText(App.getGameLogic().millisToString(millisLeft)));
 
     }
 
