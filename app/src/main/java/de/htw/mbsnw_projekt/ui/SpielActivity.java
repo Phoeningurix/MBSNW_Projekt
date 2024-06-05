@@ -1,5 +1,6 @@
 package de.htw.mbsnw_projekt.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,16 +17,21 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
+import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import java.time.LocalDateTime;
 
 import de.htw.mbsnw_projekt.R;
 import de.htw.mbsnw_projekt.app.App;
+import de.htw.mbsnw_projekt.database.models.Punkt;
 import de.htw.mbsnw_projekt.database.models.Spiel;
 import de.htw.mbsnw_projekt.logic.GameLogic;
+import de.htw.mbsnw_projekt.logic.MapPainter;
 import de.htw.mbsnw_projekt.logic.MapPainterImpl;
 import de.htw.mbsnw_projekt.view_models.SpielViewModel;
 
@@ -44,10 +50,17 @@ public class SpielActivity extends AppCompatActivity {
 
     Button nextZiel;
 
+    MapPainter mapPainter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+
+        //für OSMDROID
+        Context ctx = getApplicationContext();
+        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+
         setContentView(R.layout.activity_spiel);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -78,6 +91,13 @@ public class SpielActivity extends AppCompatActivity {
         zielName = findViewById(R.id.ziel_name);
         nextZiel = findViewById(R.id.next_ziel);
         timer = findViewById(R.id.timer);
+
+        map = (MapView) findViewById(R.id.map);
+        mapPainter = new MapPainterImpl(map, this);
+
+        mapPainter.punktHinzufuegen(new Punkt(52.761384, 13.234324, LocalDateTime.now().minusSeconds(20), viewModel.getAktuellesSpiel().getId()));
+        mapPainter.punktHinzufuegen(new Punkt(52.700000, 13.280000, LocalDateTime.now().minusSeconds(5), viewModel.getAktuellesSpiel().getId()));
+        mapPainter.punktHinzufuegen(new Punkt(52.760000, 13.123456, LocalDateTime.now(), viewModel.getAktuellesSpiel().getId()));
 
         Toast.makeText(this, "Aktuelles Spiel: " + aktuellesSpiel, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onCreate: Aktuelles Spiel: " + aktuellesSpiel);

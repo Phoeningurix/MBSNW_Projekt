@@ -38,6 +38,7 @@ public class MapPainterImpl implements MapPainter {
 
         wegPunkte = new LinkedList<>();
         line = new Polyline();
+        map.getOverlays().add(line);
 
     }
 
