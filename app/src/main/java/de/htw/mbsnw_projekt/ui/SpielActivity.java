@@ -31,6 +31,7 @@ import de.htw.mbsnw_projekt.app.App;
 import de.htw.mbsnw_projekt.database.models.Punkt;
 import de.htw.mbsnw_projekt.database.models.Spiel;
 import de.htw.mbsnw_projekt.logic.GameLogic;
+import de.htw.mbsnw_projekt.logic.GeoTrackingService;
 import de.htw.mbsnw_projekt.logic.MapPainter;
 import de.htw.mbsnw_projekt.logic.MapPainterImpl;
 import de.htw.mbsnw_projekt.view_models.SpielViewModel;
@@ -95,9 +96,12 @@ public class SpielActivity extends AppCompatActivity {
         map = (MapView) findViewById(R.id.map);
         mapPainter = new MapPainterImpl(map, this);
 
-        mapPainter.punktHinzufuegen(new Punkt(52.761384, 13.234324, LocalDateTime.now().minusSeconds(20), viewModel.getAktuellesSpiel().getId()));
+        /*mapPainter.punktHinzufuegen(new Punkt(52.761384, 13.234324, LocalDateTime.now().minusSeconds(20), viewModel.getAktuellesSpiel().getId()));
         mapPainter.punktHinzufuegen(new Punkt(52.700000, 13.280000, LocalDateTime.now().minusSeconds(5), viewModel.getAktuellesSpiel().getId()));
         mapPainter.punktHinzufuegen(new Punkt(52.760000, 13.123456, LocalDateTime.now(), viewModel.getAktuellesSpiel().getId()));
+        */
+
+        viewModel.getSpielPunkte().observe(this, punkte -> mapPainter.punkteSetzen(punkte));
 
         Toast.makeText(this, "Aktuelles Spiel: " + aktuellesSpiel, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onCreate: Aktuelles Spiel: " + aktuellesSpiel);
@@ -128,11 +132,29 @@ public class SpielActivity extends AppCompatActivity {
 
         viewModel.setUpCountDown(millisLeft -> timer.setText(App.getGameLogic().millisToString(millisLeft)));
 
+        startTrackingService();
+
     }
 
     private void onNextZielButtonClicked(View view) {
         viewModel.finishAktuellesZiel();
     }
 
+    private void startTrackingService() {
+        Intent intent = new Intent(this.getApplicationContext(), GeoTrackingService.class);
+        intent.setAction(GeoTrackingService.START_ACTION);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("aktuellesSpiel", viewModel.getAktuellesSpiel());
+        intent.putExtra("spielBundle", bundle);
+
+        startService(intent);
+    }
+
+    private void stopTrackingService() {
+        Intent intent = new Intent(this.getApplicationContext(), GeoTrackingService.class);
+        intent.setAction(GeoTrackingService.STOP_ACTION);
+        startService(intent);
+    }
 
 }

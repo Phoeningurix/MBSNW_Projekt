@@ -11,6 +11,7 @@ import org.osmdroid.views.overlay.compass.CompassOverlay;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.htw.mbsnw_projekt.database.models.Punkt;
 import de.htw.mbsnw_projekt.database.models.Ziel;
@@ -49,6 +50,18 @@ public class MapPainterImpl implements MapPainter {
     public void punktHinzufuegen(Punkt punkt) {
         wegPunkte.add(punkt.toGeopoint());
         line.setPoints(wegPunkte);
+    }
+
+    @Override
+    public void punkteSetzen(List<Punkt> punkte) {
+
+        if (!punkte.isEmpty()) {
+            wegPunkte = punkte.stream().map(Punkt::toGeopoint).collect(Collectors.toList());
+            line.setPoints(wegPunkte);
+
+            map.getController().setCenter(wegPunkte.get(wegPunkte.size() - 1));
+        }
+
     }
 
 }

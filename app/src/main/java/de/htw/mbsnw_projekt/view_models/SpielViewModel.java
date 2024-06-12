@@ -18,6 +18,7 @@ import java.util.Locale;
 import java.util.function.Consumer;
 
 import de.htw.mbsnw_projekt.app.App;
+import de.htw.mbsnw_projekt.database.models.Punkt;
 import de.htw.mbsnw_projekt.database.models.Spiel;
 import de.htw.mbsnw_projekt.database.models.Ziel;
 import de.htw.mbsnw_projekt.database.models.Zielort;
@@ -35,12 +36,18 @@ public class SpielViewModel extends ViewModel {
     private final LiveData<Ziel> aktuellesZiel;
     private final LiveData<Zielort> aktuellerZielort;
 
+    private final LiveData<Punkt> latestPunkt;
+
+    private final LiveData<List<Punkt>> spielPunkte;
+
     public SpielViewModel(Spiel aktuellesSpiel) {
         this.aktuellesSpiel = aktuellesSpiel;
         repository = App.getRepository();
         spielZiele = repository.getSpielZiele(aktuellesSpiel.getId());
         aktuellesZiel = repository.getAktuellesZiel(aktuellesSpiel.getId());
         aktuellerZielort = repository.getAktuellenZielort(aktuellesSpiel.getId());
+        latestPunkt = repository.getLatestPunkt(aktuellesSpiel.getId());
+        spielPunkte = repository.getSpielPunkte(aktuellesSpiel.getId());
 
         aktuellesZiel.observeForever(ziel -> aktuellesZielObj = ziel);
     }
@@ -59,6 +66,14 @@ public class SpielViewModel extends ViewModel {
 
     public LiveData<Zielort> getAktuellenZielort() {
         return aktuellerZielort;
+    }
+
+    public LiveData<Punkt> getLatestPunkt() {
+        return latestPunkt;
+    }
+
+    public LiveData<List<Punkt>> getSpielPunkte() {
+        return spielPunkte;
     }
 
     public void finishAktuellesZiel() {
