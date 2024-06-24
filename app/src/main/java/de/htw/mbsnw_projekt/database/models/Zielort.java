@@ -3,8 +3,11 @@ package de.htw.mbsnw_projekt.database.models;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+
+import org.osmdroid.util.GeoPoint;
 
 @Entity(
         tableName = "zielort",
@@ -89,4 +92,10 @@ public class Zielort {
                 ", ortListeId=" + ortListeId +
                 '}';
     }
+
+    @Ignore
+    public GeoPoint toGeopoint() {
+        return new GeoPoint(latitude, longitude);
+    }
+
 }
