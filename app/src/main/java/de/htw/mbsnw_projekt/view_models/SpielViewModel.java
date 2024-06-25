@@ -28,8 +28,11 @@ import de.htw.mbsnw_projekt.logic.MapPainterImpl;
 public class SpielViewModel extends ViewModel {
     private static final String TAG = "SpielViewModel";
 
+    public double minAbstandZumZiel = 20;
+
     private final Spiel aktuellesSpiel;
     private Ziel aktuellesZielObj;
+    private Zielort aktuellesZielortObj;
     private final Repository repository;
 
     private final LiveData<List<Ziel>> spielZiele;
@@ -50,6 +53,15 @@ public class SpielViewModel extends ViewModel {
         spielPunkte = repository.getSpielPunkte(aktuellesSpiel.getId());
 
         aktuellesZiel.observeForever(ziel -> aktuellesZielObj = ziel);
+        aktuellerZielort.observeForever(zielort -> aktuellesZielortObj = zielort);
+    }
+
+    public double getMinAbstandZumZiel() {
+        return minAbstandZumZiel;
+    }
+
+    public void setMinAbstandZumZiel(double minAbstandZumZiel) {
+        this.minAbstandZumZiel = minAbstandZumZiel;
     }
 
     public Spiel getAktuellesSpiel() {
@@ -72,6 +84,10 @@ public class SpielViewModel extends ViewModel {
         return latestPunkt;
     }
 
+    public Ziel getAktuellesZielObj() {
+        return aktuellesZielObj;
+    }
+
     public LiveData<List<Punkt>> getSpielPunkte() {
         return spielPunkte;
     }
@@ -81,7 +97,6 @@ public class SpielViewModel extends ViewModel {
             aktuellesZielObj.setTimestamp(LocalDateTime.now());
             repository.update(aktuellesZielObj);
         }
-
     }
 
     public void setUpCountDown(Consumer<Long> updateTextView) {
@@ -103,4 +118,7 @@ public class SpielViewModel extends ViewModel {
     }
 
 
+    public Zielort getAktuellesZielortObj() {
+        return aktuellesZielortObj;
+    }
 }

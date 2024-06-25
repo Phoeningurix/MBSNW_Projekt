@@ -20,9 +20,7 @@ public class MapPainterImpl implements MapPainter {
 
     private final MapView map;
     private List<GeoPoint> wegPunkte;
-
     Polyline line;
-
 
     public MapPainterImpl(MapView mapView, Context activityContext) {
 

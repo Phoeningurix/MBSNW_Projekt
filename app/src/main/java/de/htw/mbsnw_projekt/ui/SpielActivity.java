@@ -93,6 +93,8 @@ public class SpielActivity extends AppCompatActivity {
         nextZiel = findViewById(R.id.next_ziel);
         timer = findViewById(R.id.timer);
 
+        nextZiel.setVisibility(View.GONE);
+
         map = (MapView) findViewById(R.id.map);
         mapPainter = new MapPainterImpl(map, this);
 
@@ -102,6 +104,16 @@ public class SpielActivity extends AppCompatActivity {
         */
 
         viewModel.getSpielPunkte().observe(this, punkte -> mapPainter.punkteSetzen(punkte));
+
+        viewModel.getLatestPunkt().observe(this, punkt -> {
+            if (punkt != null) {
+                if (App.getGeoLogic().getEntfernung(viewModel.getAktuellesZielortObj(), punkt) <= viewModel.getMinAbstandZumZiel()) {
+                    nextZiel.setVisibility(View.VISIBLE);
+                } else {
+                    nextZiel.setVisibility(View.GONE);
+                }
+            }
+        });
 
         Toast.makeText(this, "Aktuelles Spiel: " + aktuellesSpiel, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onCreate: Aktuelles Spiel: " + aktuellesSpiel);
@@ -138,6 +150,7 @@ public class SpielActivity extends AppCompatActivity {
 
     private void onNextZielButtonClicked(View view) {
         viewModel.finishAktuellesZiel();
+        nextZiel.setVisibility(View.GONE);
     }
 
     private void startTrackingService() {
