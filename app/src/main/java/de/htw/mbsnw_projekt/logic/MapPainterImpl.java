@@ -51,16 +51,17 @@ public class MapPainterImpl implements MapPainter {
 
     }
 
-    public void zielHinzufuegen(Zielort zielort) {
-        /*for (Marker m : markerList) {
-            map.getOverlays().remove(m);
-            m.setTextLabelForegroundColor(Color.RED);
-            map.getOverlays().add(m);
-        }*/
+    public void zielHinzufuegen(Context context, Zielort zielort) {
+        for (Marker m : markerList) {
+            //map.getOverlays().remove(m);
+            m.setIcon(context.getDrawable(R.drawable.marker_rot1));
+            //map.getOverlays().add(m);
+        }
         Marker marker = new Marker(map);
         GeoPoint punkt = zielort.toGeopoint();
         marker.setPosition(punkt);
-        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        //marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        marker.setIcon(context.getDrawable(R.drawable.marker_gruen1));
         markerList.add(marker);
         map.getOverlays().add(marker);
         map.getController().setCenter(punkt);
