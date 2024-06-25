@@ -40,6 +40,25 @@
         app:layout_constraintTop_toBottomOf="@+id/ziel_name" />
 
     <Button
+        android:id="@+id/center_on_player"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/focus_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/baseline_center_focus_strong_24"
+        app:layout_constraintBottom_toBottomOf="@+id/center_on_player"
+        app:layout_constraintEnd_toEndOf="@+id/center_on_player"
+        app:layout_constraintStart_toStartOf="@+id/center_on_player"
+        app:layout_constraintTop_toTopOf="@+id/center_on_player" />
+
+    <Button
         android:id="@+id/next_ziel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

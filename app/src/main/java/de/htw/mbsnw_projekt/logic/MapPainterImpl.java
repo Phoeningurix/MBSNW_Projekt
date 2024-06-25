@@ -2,6 +2,7 @@ package de.htw.mbsnw_projekt.logic;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -25,9 +26,9 @@ public class MapPainterImpl implements MapPainter {
 
     private final MapView map;
     private List<GeoPoint> wegPunkte;
-    Polyline line;
+    private final Polyline line;
 
-    List<Marker> markerList;
+    private List<Marker> markerList;
 
     public MapPainterImpl(MapView mapView, Context activityContext) {
 
@@ -51,14 +52,15 @@ public class MapPainterImpl implements MapPainter {
     }
 
     public void zielHinzufuegen(Zielort zielort) {
-        for (Marker m : markerList) {
+        /*for (Marker m : markerList) {
             map.getOverlays().remove(m);
             m.setTextLabelForegroundColor(Color.RED);
             map.getOverlays().add(m);
-        }
+        }*/
         Marker marker = new Marker(map);
         GeoPoint punkt = zielort.toGeopoint();
         marker.setPosition(punkt);
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         markerList.add(marker);
         map.getOverlays().add(marker);
         map.getController().setCenter(punkt);

@@ -47,11 +47,11 @@ public class SpielActivity extends AppCompatActivity {
 
     private MapView map;
 
-    TextView timer;
+    private TextView timer;
 
-    Button nextZiel;
+    private Button nextZiel;
 
-    MapPainter mapPainter;
+    private MapPainter mapPainter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
