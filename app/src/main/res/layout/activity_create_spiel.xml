@@ -7,6 +7,64 @@
     android:layout_height="match_parent"
     tools:context=".ui.CreateSpielActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/create_spiel_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/primaryDarkGreen"
+        android:elevation="4dp"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/time_limit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Zeitlimit auswählen: "
+        android:textColor="@color/primaryDarkGreen"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_spiel_toolbar"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <SeekBar
+        android:id="@+id/time_limit_seek_bar"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:min="1"
+        android:max="2"
+        android:progressTint="@color/secondaryLime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time_limit_text" />
+
+    <TextView
+        android:id="@+id/ziel_number_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Anzahl der Ziele auswählen: "
+        android:textColor="@color/primaryDarkGreen"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/time_limit_seek_bar" />
+
+    <SeekBar
+        android:id="@+id/ziel_number_seek_bar"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:max="2"
+        android:min="1"
+        android:progressTint="@color/secondaryLime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ziel_number_text" />
 
     <Button
         android:id="@+id/create_spiel"

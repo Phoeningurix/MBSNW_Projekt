@@ -134,6 +134,7 @@ public class SpielActivity extends AppCompatActivity {
         viewModel.getAktuellenZielort().observe(this, zielort -> {
             if (zielort != null) {
                 zielName.setText(zielort.getName());
+                mapPainter.zielHinzufuegen(zielort);
             } else {
                 zielName.setText("Ziel");
                 Log.d(TAG, "onCreate: getAktuellenZielort gibt null zurück.");

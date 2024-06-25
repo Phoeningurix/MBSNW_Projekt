@@ -47,7 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="30dp"/>
+        android:layout_margin="60dp"/>
 
     <TextView
         android:id="@+id/timer"
