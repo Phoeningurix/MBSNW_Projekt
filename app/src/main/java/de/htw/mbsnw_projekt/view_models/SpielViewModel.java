@@ -33,6 +33,8 @@ public class SpielViewModel extends ViewModel {
     private final Spiel aktuellesSpiel;
     private Ziel aktuellesZielObj;
     private Zielort aktuellesZielortObj;
+
+    private Punkt aktuellesPunktObj;
     private final Repository repository;
 
     private final LiveData<List<Ziel>> spielZiele;
@@ -54,6 +56,7 @@ public class SpielViewModel extends ViewModel {
 
         aktuellesZiel.observeForever(ziel -> aktuellesZielObj = ziel);
         aktuellerZielort.observeForever(zielort -> aktuellesZielortObj = zielort);
+        latestPunkt.observeForever(punkt -> aktuellesPunktObj = punkt);
     }
 
     public double getMinAbstandZumZiel() {
@@ -86,6 +89,10 @@ public class SpielViewModel extends ViewModel {
 
     public Ziel getAktuellesZielObj() {
         return aktuellesZielObj;
+    }
+
+    public Punkt getAktuellesPunktObj() {
+        return aktuellesPunktObj;
     }
 
     public LiveData<List<Punkt>> getSpielPunkte() {

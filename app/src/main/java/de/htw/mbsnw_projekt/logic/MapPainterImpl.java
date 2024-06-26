@@ -1,8 +1,13 @@
 package de.htw.mbsnw_projekt.logic;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
+
+import androidx.core.content.res.ResourcesCompat;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -18,17 +23,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.htw.mbsnw_projekt.R;
+import de.htw.mbsnw_projekt.app.App;
 import de.htw.mbsnw_projekt.database.models.Punkt;
 import de.htw.mbsnw_projekt.database.models.Ziel;
 import de.htw.mbsnw_projekt.database.models.Zielort;
 
 public class MapPainterImpl implements MapPainter {
 
+    private static final String TAG = "MapPainterImpl";
     private final MapView map;
     private List<GeoPoint> wegPunkte;
     private final Polyline line;
 
-    private List<Marker> markerList;
+    private final List<Marker> markerList;
 
     public MapPainterImpl(MapView mapView, Context activityContext) {
 
@@ -52,19 +59,38 @@ public class MapPainterImpl implements MapPainter {
     }
 
     public void zielHinzufuegen(Context context, Zielort zielort) {
-        for (Marker m : markerList) {
-            //map.getOverlays().remove(m);
-            m.setIcon(context.getDrawable(R.drawable.marker_rot1));
-            //map.getOverlays().add(m);
+        Drawable markerIconBlau = ResourcesCompat.getDrawable(App.getAndroidApp().getResources(), R.drawable.marker_blau1, null);
+        Drawable markerIconGruen = ResourcesCompat.getDrawable(App.getAndroidApp().getResources(), R.drawable.marker_gruen1, null);
+        if (markerIconBlau == null || markerIconGruen == null) {
+            Log.w(TAG, "zielHinzufuegen: Marker Drawable wurde nicht gefunden");
+            return;
         }
+        markerIconBlau = rescaleDrawable(markerIconBlau, 60, 60);
+        markerIconGruen = rescaleDrawable(markerIconGruen, 60, 60);
+
+        for (Marker m : markerList) {
+            m.setIcon(markerIconBlau);
+            m.setAlpha(0.5f);
+        }
+
         Marker marker = new Marker(map);
         GeoPoint punkt = zielort.toGeopoint();
         marker.setPosition(punkt);
-        //marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        marker.setIcon(context.getDrawable(R.drawable.marker_gruen1));
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        marker.setIcon(markerIconGruen);
+        marker.setOnMarkerClickListener((marker1, mapView) -> {
+            mapView.getController().setZoom(18.0);
+            mapView.getController().setCenter(punkt);
+            return true;
+        });
         markerList.add(marker);
         map.getOverlays().add(marker);
         map.getController().setCenter(punkt);
+    }
+
+    private Drawable rescaleDrawable(Drawable drawable, int width, int height) {
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        return new BitmapDrawable(App.getAndroidApp().getResources(), Bitmap.createScaledBitmap(bitmap, width, height, true));
     }
 
     public void punktHinzufuegen(Punkt punkt) {
@@ -79,7 +105,7 @@ public class MapPainterImpl implements MapPainter {
             wegPunkte = punkte.stream().map(Punkt::toGeopoint).collect(Collectors.toList());
             line.setPoints(wegPunkte);
 
-            map.getController().setCenter(wegPunkte.get(wegPunkte.size() - 1));
+            //map.getController().setCenter(wegPunkte.get(wegPunkte.size() - 1));
         }
 
     }

@@ -13,16 +13,19 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.Executor;
 
 import de.htw.mbsnw_projekt.R;
 import de.htw.mbsnw_projekt.app.App;
@@ -58,6 +61,7 @@ public class GeoTrackingService extends Service {
                     aktuellesSpiel = bundle.getParcelable("aktuellesSpiel");
                 }
                 start();
+                //handleSingleLocation();
                 return START_STICKY;
             case STOP_ACTION:
                 stopSelf();
@@ -78,7 +82,6 @@ public class GeoTrackingService extends Service {
         getLocation();
         startForeground(1, getNotification());
     }
-
 
 
     private void createNotificationChannel() {
@@ -118,10 +121,14 @@ public class GeoTrackingService extends Service {
                 Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
 
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    10000L, 5, locationListener, Looper.getMainLooper());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                locationManager.requestLocationUpdates(LocationManager.FUSED_PROVIDER,
+                        10000L, 5, locationListener, Looper.getMainLooper());
+            } else {
+                Log.w(TAG, "getLocation: API Level 31 required");
+            }
         } else {
-            Log.d(TAG, "getLocation: Location Permission not granted");
+            Log.w(TAG, "getLocation: Location Permission not granted");
         }
     }
 
@@ -140,13 +147,36 @@ public class GeoTrackingService extends Service {
                 stopSelf();
             }
         }
+
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras)
-        {}
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+
         @Override
-        public void onProviderEnabled(@NonNull String provider) {}
+        public void onProviderEnabled(@NonNull String provider) {
+        }
+
         @Override
-        public void onProviderDisabled(@NonNull String provider) {}
+        public void onProviderDisabled(@NonNull String provider) {
+        }
     };
+
+    private void handleSingleLocation() {
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                locationManager.getCurrentLocation(LocationManager.GPS_PROVIDER, null, handler::post, locationListener::onLocationChanged);
+            } else {
+                Log.w(TAG, "handleSingleLocation: API Level 30 required");
+            }
+        } else {
+            Log.w(TAG, "handleSingleLocation: Location Permission not granted");
+        }
+
+
+    }
 
 }

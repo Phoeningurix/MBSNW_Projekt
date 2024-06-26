@@ -51,6 +51,8 @@ public class SpielActivity extends AppCompatActivity {
 
     private Button nextZiel;
 
+    private Button focusOnPlayer;
+
     private MapPainter mapPainter;
 
     @Override
@@ -92,6 +94,7 @@ public class SpielActivity extends AppCompatActivity {
         zielName = findViewById(R.id.ziel_name);
         nextZiel = findViewById(R.id.next_ziel);
         timer = findViewById(R.id.timer);
+        focusOnPlayer = findViewById(R.id.center_on_player);
 
         nextZiel.setVisibility(View.GONE);
 
@@ -147,11 +150,20 @@ public class SpielActivity extends AppCompatActivity {
 
         startTrackingService();
 
+        focusOnPlayer.setOnClickListener(this::onFocusOnPlayerButtonClicked);
+
     }
 
     private void onNextZielButtonClicked(View view) {
         viewModel.finishAktuellesZiel();
         nextZiel.setVisibility(View.GONE);
+    }
+
+    private void onFocusOnPlayerButtonClicked(View view) {
+        if (viewModel.getAktuellesPunktObj()!=null) {
+            map.getController().setCenter(viewModel.getAktuellesPunktObj().toGeopoint());
+            map.getController().setZoom(18.0);
+        }
     }
 
     private void startTrackingService() {
