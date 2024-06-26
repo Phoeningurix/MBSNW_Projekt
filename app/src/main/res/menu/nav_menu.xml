@@ -22,7 +22,7 @@
             android:title="Share"/>
 
         <item
-            android:id="@+id/nav_about"
+            android:id="@+id/nav_spiele"
             android:icon="@drawable/nav_about"
             android:title="Info"/>
 

@@ -11,12 +11,12 @@ import android.view.ViewGroup;
 import de.htw.mbsnw_projekt.R;
 
 
-public class InfoFragment extends Fragment {
+public class SpieleFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_info, container, false);
+        return inflater.inflate(R.layout.fragment_spiele, container, false);
     }
 }

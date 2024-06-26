@@ -96,8 +96,8 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
         } else if (menuItem.getItemId() == R.id.nav_share) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShareFragment()).commit();
-        } else if (menuItem.getItemId() == R.id.nav_about) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new InfoFragment()).commit();
+        } else if (menuItem.getItemId() == R.id.nav_spiele) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SpieleFragment()).commit();
         } else if (menuItem.getItemId() == R.id.nav_exit) {
             Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
         }
