@@ -122,8 +122,8 @@ public class GeoTrackingService extends Service {
                 PackageManager.PERMISSION_GRANTED) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                locationManager.requestLocationUpdates(LocationManager.FUSED_PROVIDER,
-                        10000L, 5, locationListener, Looper.getMainLooper());
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                        5000L, 5, locationListener, Looper.getMainLooper());
             } else {
                 Log.w(TAG, "getLocation: API Level 31 required");
             }
