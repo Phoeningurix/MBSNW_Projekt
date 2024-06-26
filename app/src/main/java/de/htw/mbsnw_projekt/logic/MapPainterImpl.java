@@ -43,7 +43,7 @@ public class MapPainterImpl implements MapPainter {
         map = mapView;
 
         map.setTileSource(TileSourceFactory.MAPNIK);
-        map.getController().setZoom(18.0);
+        map.getController().setZoom(20.0);
         map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.ALWAYS);
         map.setMultiTouchControls(true);
 
@@ -84,7 +84,7 @@ public class MapPainterImpl implements MapPainter {
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         marker.setIcon(markerIconGruen);
         marker.setOnMarkerClickListener((marker1, mapView) -> {
-            mapView.getController().setZoom(18.0);
+            mapView.getController().setZoom(20.0);
             mapView.getController().setCenter(punkt);
             return true;
         });

@@ -174,7 +174,7 @@ public class SpielActivity extends AppCompatActivity {
     private void onFocusOnPlayerButtonClicked(View view) {
         if (viewModel.getAktuellesPunktObj()!=null) {
             map.getController().setCenter(viewModel.getAktuellesPunktObj().toGeopoint());
-            map.getController().setZoom(18.0);
+            map.getController().setZoom(20.0);
         }
     }
 
