@@ -49,6 +49,8 @@ public class CreateSpielActivity extends AppCompatActivity {
 
     private int anzahlZiele = 3;
 
+    private int ortlisteID = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +125,7 @@ public class CreateSpielActivity extends AppCompatActivity {
         // TODO: 02.06.2024 read setting from textfields
         Spiel neuesSpiel = new Spiel(LocalDateTime.now(), null, 0, timeLimitSeekBar.getProgress()*1000*60*60);
         viewModel.createSpiel(neuesSpiel, erstelltesSpiel -> {
-            zieleErstellen(erstelltesSpiel, zielAnzahlSeekBar.getProgress());
+            zieleErstellen(erstelltesSpiel, zielAnzahlSeekBar.getProgress(), ortlisteID);
 
             Log.d(TAG, "onCreateSpielButtonClicked: Erstelltes Spiel: " + erstelltesSpiel);
             Intent intent = new Intent(CreateSpielActivity.this, SpielActivity.class);
@@ -134,9 +136,9 @@ public class CreateSpielActivity extends AppCompatActivity {
         });
     }
 
-    private void zieleErstellen(Spiel erstelltesSpiel, int anzahl) {
+    private void zieleErstellen(Spiel erstelltesSpiel, int anzahl, int ortliste) {
         // TODO: 02.06.2024 Ziele aus spezifischen Ortlisten
-        repository.getAlleZielorte().observe(this, zielorte -> {
+        repository.getAlleZielorte(ortliste).observe(this, zielorte -> {
             Random r = new Random();
             Log.d(TAG, "zieleErstellen: Erstelle " + anzahl + " Ziele aus Liste mit " + zielorte.size() + " Zielen");
             for (int i = 0; i < anzahl; i++) {
