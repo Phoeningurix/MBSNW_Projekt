@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    app:cardBackgroundColor="@color/secondaryLightLime"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spiel_name_text"
+            android:text="Spiel 1: Datum"
+            android:textSize="20sp"
+            android:textColor="@color/primaryDarkGreen"
+            android:layout_alignParentStart="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spiel_nr_text"
+            android:layout_below="@+id/spiel_name_text"
+            android:text="00:00:00"
+            android:textSize="20sp"
+            android:textColor="@color/primaryGreen"
+            />
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:id="@+id/spiel_icon"
+            android:layout_margin="8dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/game_successful"
+            app:tint="@color/primaryGreen" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
