@@ -2,6 +2,7 @@ package de.htw.mbsnw_projekt.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -23,6 +25,7 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
 
 import java.time.LocalDateTime;
 
@@ -108,8 +111,17 @@ public class SpielActivity extends AppCompatActivity {
 
         viewModel.getSpielPunkte().observe(this, punkte -> mapPainter.punkteSetzen(punkte));
 
+        Marker playerMarker = new Marker(map);
+        Drawable playerIcon = ResourcesCompat.getDrawable(App.getAndroidApp().getResources(), R.drawable.marker_player, null);
+        playerIcon = mapPainter.rescaleDrawable(playerIcon, 60, 60);
+        playerMarker.setIcon(playerIcon);
+        playerMarker.setAlpha(0.75f);
+        playerMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+
         viewModel.getLatestPunkt().observe(this, punkt -> {
             if (punkt != null) {
+                playerMarker.setPosition(punkt.toGeopoint());
+                map.getOverlays().add(playerMarker);
                 if (App.getGeoLogic().getEntfernung(viewModel.getAktuellesZielortObj(), punkt) <= viewModel.getMinAbstandZumZiel()) {
                     nextZiel.setVisibility(View.VISIBLE);
                 } else {

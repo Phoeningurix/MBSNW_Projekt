@@ -3,6 +3,7 @@ package de.htw.mbsnw_projekt.logic;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -52,6 +53,10 @@ public class MapPainterImpl implements MapPainter {
 
         wegPunkte = new LinkedList<>();
         line = new Polyline();
+        line.getOutlinePaint().setColor(Color.CYAN);
+        //line.getOutlinePaint().setARGB(95, 166, 240, 255);
+        line.getOutlinePaint().setStrokeWidth(30);
+        line.getOutlinePaint().setStrokeCap(Paint.Cap.ROUND);
         map.getOverlays().add(line);
 
         markerList = new ArrayList<>();
@@ -88,7 +93,7 @@ public class MapPainterImpl implements MapPainter {
         map.getController().setCenter(punkt);
     }
 
-    private Drawable rescaleDrawable(Drawable drawable, int width, int height) {
+    public Drawable rescaleDrawable(Drawable drawable, int width, int height) {
         Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
         return new BitmapDrawable(App.getAndroidApp().getResources(), Bitmap.createScaledBitmap(bitmap, width, height, true));
     }
