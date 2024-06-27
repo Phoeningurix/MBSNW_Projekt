@@ -19,4 +19,11 @@
     <color name="accentDarkYellow">#E6AE23</color>
     <color name="accentLightYellow">#FFF9C4</color>
 
+    <!-- Other colors: -->
+    <color name="red">#FF0000</color>
+    <color name="dark_red">#900000</color>
+    <color name="medium_blue">#00A0FF</color>
+    <color name="dark_blue">#000090</color>
+
+
 </resources>
