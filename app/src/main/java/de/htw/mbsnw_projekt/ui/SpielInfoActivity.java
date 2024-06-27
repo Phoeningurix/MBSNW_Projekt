@@ -1,7 +1,9 @@
 package de.htw.mbsnw_projekt.ui;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -21,6 +23,8 @@ import de.htw.mbsnw_projekt.view_models.SpielViewModel;
 
 public class SpielInfoActivity extends AppCompatActivity {
 
+    private static final String TAG = "SpielInfoActivity";
+
     private TextView spielZieleAnzahl;
 
     private TextView spielZiele;
@@ -29,7 +33,6 @@ public class SpielInfoActivity extends AppCompatActivity {
 
     private SpielInfoViewModel viewModel;
 
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,14 @@ public class SpielInfoActivity extends AppCompatActivity {
         spielZieleAnzahl = findViewById(R.id.spiel_anzahl_ziele_text);
         spielZiele = findViewById(R.id.spiel_ziele_text);
         spielZeitlimit = findViewById(R.id.spiel_zeit_limit_text);
+
+        viewModel.getAlleSpielZiele().observe(this, ziele -> spielZieleAnzahl.setText("Anzahl Ziele: " + ziele.size()));
+        spielZiele.setText("Ziele und Route: ");
+        String zeitlimit = "Zeitlimit: " + ((spiel.getTimeLimit()/1000)/60)/60 + "h";
+        spielZeitlimit.setText(zeitlimit);
+
+
+
 
     }
 }
