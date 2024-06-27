@@ -1,5 +1,6 @@
 package de.htw.mbsnw_projekt.ui.navigation_drawer;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,11 +19,14 @@ import java.util.List;
 
 import de.htw.mbsnw_projekt.R;
 import de.htw.mbsnw_projekt.database.models.Spiel;
+import de.htw.mbsnw_projekt.ui.SpielActivity;
+import de.htw.mbsnw_projekt.ui.SpielInfoActivity;
+import de.htw.mbsnw_projekt.ui.recycler_view.SpielRecyclerView;
 import de.htw.mbsnw_projekt.ui.recycler_view.SpieleAdapter;
 import de.htw.mbsnw_projekt.view_models.SpieleFragmentViewModel;
 
 
-public class SpieleFragment extends Fragment {
+public class SpieleFragment extends Fragment implements SpielRecyclerView {
 
     private SpieleFragmentViewModel viewModel;
 
@@ -42,7 +46,7 @@ public class SpieleFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_spiele);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        SpieleAdapter adapter = new SpieleAdapter();
+        SpieleAdapter adapter = new SpieleAdapter(this);
         recyclerView.setAdapter(adapter);
 
         viewModel.getAlleSpiele().observe(getViewLifecycleOwner(), new Observer<List<Spiel>>() {
@@ -51,13 +55,16 @@ public class SpieleFragment extends Fragment {
                 adapter.setSpiele(spiele);
             }
         });
-
-
-
-
         //viewModel.getAktuellesSpiel(spiel -> textView.setText(spiel == null ? "null" : spiel.toString()));
+    }
 
-
+    @Override
+    public void onClick(Spiel spiel) {
+        Intent intent = new Intent(getContext(), SpielInfoActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("aktuellesSpiel", spiel);
+        intent.putExtra("spielBundle", bundle);
+        startActivity(intent);
     }
 
 }
