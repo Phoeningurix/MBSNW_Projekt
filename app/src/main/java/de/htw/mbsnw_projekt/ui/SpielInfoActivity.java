@@ -1,5 +1,6 @@
 package de.htw.mbsnw_projekt.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,9 +16,16 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
+
+import org.osmdroid.config.Configuration;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
 
 import de.htw.mbsnw_projekt.R;
 import de.htw.mbsnw_projekt.database.models.Spiel;
+import de.htw.mbsnw_projekt.logic.MapPainter;
+import de.htw.mbsnw_projekt.logic.MapPainterImpl;
 import de.htw.mbsnw_projekt.view_models.SpielInfoViewModel;
 import de.htw.mbsnw_projekt.view_models.SpielViewModel;
 
@@ -33,11 +41,19 @@ public class SpielInfoActivity extends AppCompatActivity {
 
     private SpielInfoViewModel viewModel;
 
+    private MapView map;
+
+    private MapPainter mapPainter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+
+        //für OSMDROID
+        Context ctx = getApplicationContext();
+        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+
         setContentView(R.layout.activity_spiel_info);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -66,13 +82,18 @@ public class SpielInfoActivity extends AppCompatActivity {
         spielZiele = findViewById(R.id.spiel_ziele_text);
         spielZeitlimit = findViewById(R.id.spiel_zeit_limit_text);
 
+        map = findViewById(R.id.spiel_info_map);
+
+        mapPainter = new MapPainterImpl(map, this);
+
         viewModel.getAlleSpielZiele().observe(this, ziele -> spielZieleAnzahl.setText("Anzahl Ziele: " + ziele.size()));
         spielZiele.setText("Ziele und Route: ");
         String zeitlimit = "Zeitlimit: " + ((spiel.getTimeLimit()/1000)/60)/60 + "h";
         spielZeitlimit.setText(zeitlimit);
 
+        map.getController().setCenter(new GeoPoint(52.520553, 13.408770));
 
-
+        // TODO: 28.06.2024 Route und Ziele anzeigen
 
     }
 }
