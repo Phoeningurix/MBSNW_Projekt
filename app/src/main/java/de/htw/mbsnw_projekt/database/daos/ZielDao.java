@@ -10,6 +10,7 @@ import androidx.room.Update;
 import java.util.List;
 
 import de.htw.mbsnw_projekt.database.models.Ziel;
+import de.htw.mbsnw_projekt.database.models.Zielort;
 
 
 @Dao
@@ -35,7 +36,6 @@ public interface ZielDao {
 
     @Query("SELECT * FROM ziel WHERE spiel_id = :spielId AND timestamp IS NULL ORDER BY reihenfolge ASC LIMIT 1")
     LiveData<Ziel> getAktuellesZiel(int spielId);
-
 
 
 

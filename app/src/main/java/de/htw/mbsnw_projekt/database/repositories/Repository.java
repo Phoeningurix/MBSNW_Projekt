@@ -60,6 +60,8 @@ public interface Repository {
 
     void getZielort(int zielortId, Consumer<Zielort> task);
 
+    LiveData<List<Zielort>> getAlleSpielZielorte(int spielId);
+
 
     //------------------------------------ZIEL------------------------------------
 

@@ -51,6 +51,7 @@ public class RepositoryImpl extends AbstractRepository {
     private final LiveData<List<OrtListe>> alleOrtlisten;
 
 
+
     private RepositoryImpl() {
         spielDao = App.getDatabase().spielDao();
         punktDao = App.getDatabase().punktDao();
@@ -184,6 +185,11 @@ public class RepositoryImpl extends AbstractRepository {
     @Override
     public LiveData<Zielort> getAktuellenZielort(int spielId) {
         return zielortDao.getAktuellenZielort(spielId);
+    }
+
+    @Override
+    public LiveData<List<Zielort>> getAlleSpielZielorte(int spielId) {
+        return zielortDao.getAlleSpielZielorte(spielId);
     }
 
     //------------------------------------ZIEL------------------------------------
