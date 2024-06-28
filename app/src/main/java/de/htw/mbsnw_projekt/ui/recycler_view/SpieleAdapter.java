@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -49,14 +50,30 @@ public class SpieleAdapter extends RecyclerView.Adapter<SpieleAdapter.SpieleHold
         String name = String.format(Locale.GERMAN, "Spiel Nr. %d: %te.%<tB.%<tY", currentSpiel.getId(), currentSpiel.getStartTimestamp());
         holder.spielNameText.setText(name);
         // TODO: 27.06.2024 Spieldauer berechnen
-        String zeit = String.format(Locale.GERMAN, "%tH:%<tM:%<tS", currentSpiel.getStartTimestamp());
-        holder.spielZeitText.setText(zeit);
+
+        if (currentSpiel.getEndTimestamp() != null) {
+            Duration duration = Duration.between(currentSpiel.getStartTimestamp(), currentSpiel.getEndTimestamp());
+            long seconds = duration.getSeconds();
+
+            long hours = seconds / 3600;
+            long minutes = (seconds % 3600) / 60;
+            long secs = seconds % 60;
+
+            holder.spielZeitText.setText(String.format(Locale.GERMAN, "%02d:%02d:%02d", hours, minutes, secs));
+
+        } else {
+            holder.spielZeitText.setText("00:00:00");
+        }
+
+
+        //String zeit = String.format(Locale.GERMAN, "%tH:%<tM:%<tS", currentSpiel.getStartTimestamp());
+        //holder.spielZeitText.setText(zeit);
         App.getRepository().getNichtErreichteSpielZiele(currentSpiel.getId()).observeForever(ziele -> {
             if (ziele.isEmpty()) {
                 holder.spielIcon.setImageDrawable(ResourcesCompat.getDrawable(App.getAndroidApp().getResources(), R.drawable.game_successful, null));
                 holder.spielNameText.setTextColor(App.getAndroidApp().getColor(R.color.primaryDarkGreen));
                 holder.spielZeitText.setTextColor(App.getAndroidApp().getColor(R.color.primaryGreen));
-            } else if (currentSpiel.getEndTimestamp() == null){
+            } else if (currentSpiel.getEndTimestamp() == null) {
                 holder.spielIcon.setImageDrawable(ResourcesCompat.getDrawable(App.getAndroidApp().getResources(), R.drawable.game_running, null));
                 holder.spielNameText.setTextColor(App.getAndroidApp().getColor(R.color.dark_blue));
                 holder.spielZeitText.setTextColor(App.getAndroidApp().getColor(R.color.medium_blue));
@@ -95,8 +112,6 @@ public class SpieleAdapter extends RecyclerView.Adapter<SpieleAdapter.SpieleHold
                 @Override
                 public void onClick(View v) {
                     if (getAdapterPosition() != RecyclerView.NO_POSITION) {
-
-                        // TODO: 27.06.2024 Spiel an neue Activity übergeben
                         spielRecyclerView.onClick(spiele.get(getAdapterPosition()));
 
                     }
@@ -107,5 +122,4 @@ public class SpieleAdapter extends RecyclerView.Adapter<SpieleAdapter.SpieleHold
     }
 
 
-    
 }

@@ -28,6 +28,8 @@ public class SpielInfoViewModel extends ViewModel {
 
     private LiveData<List<Punkt>> alleSpielPunkte;
 
+    private LiveData<List<Ziel>> nichErreichteZiele;
+
 
     public SpielInfoViewModel(Spiel spiel) {
         this.spiel = spiel;
@@ -36,6 +38,7 @@ public class SpielInfoViewModel extends ViewModel {
         alleSpielZiele = repository.getSpielZiele(spiel.getId());
         alleSpielZielorte = repository.getAlleSpielZielorte(spiel.getId());
         alleSpielPunkte = repository.getSpielPunkte(spiel.getId());
+        nichErreichteZiele = repository.getNichtErreichteSpielZiele(spiel.getId());
 
     }
 
@@ -49,5 +52,9 @@ public class SpielInfoViewModel extends ViewModel {
 
     public LiveData<List<Punkt>> getAlleSpielPunkte() {
         return alleSpielPunkte;
+    }
+
+    public LiveData<List<Ziel>> getNichErreichteZiele() {
+        return nichErreichteZiele;
     }
 }

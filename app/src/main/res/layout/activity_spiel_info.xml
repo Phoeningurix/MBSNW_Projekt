@@ -43,23 +43,35 @@
         app:layout_constraintTop_toBottomOf="@+id/spiel_zeit_limit_text" />
 
     <TextView
-        android:id="@+id/spiel_ziele_text"
+        android:id="@+id/spiel_dauer_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_marginStart="40dp"
-        android:text="Namen der Ziele: "
+        android:text="Spieldauer: "
         android:textColor="@color/primaryDarkGreen"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spiel_anzahl_ziele_text" />
+
+
+    <ImageView
+        android:id="@+id/spiel_info_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="64dp"
+        android:src="@drawable/game_successful"
+        app:layout_constraintBottom_toTopOf="@+id/spiel_info_map"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spiel_anzahl_ziele_text"
+        app:layout_constraintTop_toBottomOf="@+id/spiel_info_toolbar" />
 
     <org.osmdroid.views.MapView
         android:id="@+id/spiel_info_map"
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/spiel_ziele_text" />
+        app:layout_constraintTop_toBottomOf="@+id/spiel_dauer_text" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

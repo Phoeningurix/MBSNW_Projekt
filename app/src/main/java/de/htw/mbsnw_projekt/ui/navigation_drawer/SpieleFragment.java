@@ -55,7 +55,7 @@ public class SpieleFragment extends Fragment implements SpielRecyclerView {
                 adapter.setSpiele(spiele);
             }
         });
-        //viewModel.getAktuellesSpiel(spiel -> textView.setText(spiel == null ? "null" : spiel.toString()));
+
     }
 
     @Override

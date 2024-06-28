@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -22,7 +24,11 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
+import java.time.Duration;
+import java.util.Locale;
+
 import de.htw.mbsnw_projekt.R;
+import de.htw.mbsnw_projekt.app.App;
 import de.htw.mbsnw_projekt.database.models.Spiel;
 import de.htw.mbsnw_projekt.database.models.Zielort;
 import de.htw.mbsnw_projekt.logic.MapPainter;
@@ -36,7 +42,7 @@ public class SpielInfoActivity extends AppCompatActivity {
 
     private TextView spielZieleAnzahl;
 
-    private TextView spielZiele;
+    private TextView spielDauer;
 
     private TextView spielZeitlimit;
 
@@ -47,6 +53,8 @@ public class SpielInfoActivity extends AppCompatActivity {
     private MapPainter mapPainter;
 
     private Toolbar toolbar;
+
+    private ImageView spielInfoIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +90,20 @@ public class SpielInfoActivity extends AppCompatActivity {
         }).get(SpielInfoViewModel.class);
 
         spielZieleAnzahl = findViewById(R.id.spiel_anzahl_ziele_text);
-        spielZiele = findViewById(R.id.spiel_ziele_text);
+        spielDauer = findViewById(R.id.spiel_dauer_text);
         spielZeitlimit = findViewById(R.id.spiel_zeit_limit_text);
         toolbar = findViewById(R.id.spiel_info_toolbar);
+        spielInfoIcon = findViewById(R.id.spiel_info_icon);
+
+        viewModel.getNichErreichteZiele().observe(this, ziele -> {
+            if (ziele.isEmpty()) {
+                spielInfoIcon.setImageDrawable(ResourcesCompat.getDrawable(App.getAndroidApp().getResources(), R.drawable.game_successful, null));
+            } else if (ausgewaehltesSpiel.getEndTimestamp() == null) {
+                spielInfoIcon.setImageDrawable(ResourcesCompat.getDrawable(App.getAndroidApp().getResources(), R.drawable.game_running, null));
+            } else {
+                spielInfoIcon.setImageDrawable(ResourcesCompat.getDrawable(App.getAndroidApp().getResources(), R.drawable.game_failed, null));
+            }
+        });
 
         toolbar.setTitle("Spiel Nr. " + ausgewaehltesSpiel.getId());
 
@@ -93,14 +112,26 @@ public class SpielInfoActivity extends AppCompatActivity {
         mapPainter = new MapPainterImpl(map, this);
 
         viewModel.getAlleSpielZiele().observe(this, ziele -> spielZieleAnzahl.setText("Anzahl Ziele: " + ziele.size()));
-        spielZiele.setText("Ziele und Route: ");
         String zeitlimit = "Zeitlimit: " + ((spiel.getTimeLimit()/1000)/60)/60 + "h";
         spielZeitlimit.setText(zeitlimit);
 
+        if (ausgewaehltesSpiel.getEndTimestamp() != null) {
+            Duration duration = Duration.between(ausgewaehltesSpiel.getStartTimestamp(), ausgewaehltesSpiel.getEndTimestamp());
+            long seconds = duration.getSeconds();
+
+            long hours = seconds / 3600;
+            long minutes = (seconds % 3600) / 60;
+            long secs = seconds % 60;
+
+            spielDauer.setText(String.format(Locale.GERMAN, "Spieldauer: %02d:%02d:%02d", hours, minutes, secs));
+
+        } else {
+            spielDauer.setText("Spieldauer: 00:00:00");
+        }
+
+
         map.getController().setCenter(new GeoPoint(52.520553, 13.408770));
         map.getController().setZoom(12.0);
-
-        // TODO: 28.06.2024 Route und Ziele anzeigen
 
         viewModel.getAlleSpielZielorte().observe(this, zielorte -> mapPainter.alleZielorteHinzufuegen(this, zielorte));
 
