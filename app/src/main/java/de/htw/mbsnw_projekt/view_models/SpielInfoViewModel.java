@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import de.htw.mbsnw_projekt.app.App;
+import de.htw.mbsnw_projekt.database.models.Punkt;
 import de.htw.mbsnw_projekt.database.models.Spiel;
 import de.htw.mbsnw_projekt.database.models.Ziel;
 import de.htw.mbsnw_projekt.database.models.Zielort;
@@ -21,11 +22,11 @@ public class SpielInfoViewModel extends ViewModel {
 
     private final Repository repository;
 
-    private LiveData<List<Ziel>> alleSpielZiele;
+    private final LiveData<List<Ziel>> alleSpielZiele;
 
-    private LiveData<List<Zielort>> alleSpielZielorte;
+    private final LiveData<List<Zielort>> alleSpielZielorte;
 
-    //private int zieleAnzahl;
+    private LiveData<List<Punkt>> alleSpielPunkte;
 
 
     public SpielInfoViewModel(Spiel spiel) {
@@ -34,8 +35,7 @@ public class SpielInfoViewModel extends ViewModel {
 
         alleSpielZiele = repository.getSpielZiele(spiel.getId());
         alleSpielZielorte = repository.getAlleSpielZielorte(spiel.getId());
-
-        //alleSpielZiele.observeForever(ziele -> zieleAnzahl = ziele.size());
+        alleSpielPunkte = repository.getSpielPunkte(spiel.getId());
 
     }
 
@@ -47,7 +47,7 @@ public class SpielInfoViewModel extends ViewModel {
         return alleSpielZielorte;
     }
 
-    /*public int getZieleAnzahl() {
-        return zieleAnzahl;
-    }*/
+    public LiveData<List<Punkt>> getAlleSpielPunkte() {
+        return alleSpielPunkte;
+    }
 }

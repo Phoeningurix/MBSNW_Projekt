@@ -6,11 +6,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -24,6 +24,7 @@ import org.osmdroid.views.MapView;
 
 import de.htw.mbsnw_projekt.R;
 import de.htw.mbsnw_projekt.database.models.Spiel;
+import de.htw.mbsnw_projekt.database.models.Zielort;
 import de.htw.mbsnw_projekt.logic.MapPainter;
 import de.htw.mbsnw_projekt.logic.MapPainterImpl;
 import de.htw.mbsnw_projekt.view_models.SpielInfoViewModel;
@@ -44,6 +45,8 @@ public class SpielInfoActivity extends AppCompatActivity {
     private MapView map;
 
     private MapPainter mapPainter;
+
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,9 @@ public class SpielInfoActivity extends AppCompatActivity {
         spielZieleAnzahl = findViewById(R.id.spiel_anzahl_ziele_text);
         spielZiele = findViewById(R.id.spiel_ziele_text);
         spielZeitlimit = findViewById(R.id.spiel_zeit_limit_text);
+        toolbar = findViewById(R.id.spiel_info_toolbar);
+
+        toolbar.setTitle("Spiel Nr. " + ausgewaehltesSpiel.getId());
 
         map = findViewById(R.id.spiel_info_map);
 
@@ -92,8 +98,13 @@ public class SpielInfoActivity extends AppCompatActivity {
         spielZeitlimit.setText(zeitlimit);
 
         map.getController().setCenter(new GeoPoint(52.520553, 13.408770));
+        map.getController().setZoom(12.0);
 
         // TODO: 28.06.2024 Route und Ziele anzeigen
+
+        viewModel.getAlleSpielZielorte().observe(this, zielorte -> mapPainter.alleZielorteHinzufuegen(this, zielorte));
+
+        viewModel.getAlleSpielPunkte().observe(this, punkte -> mapPainter.punkteSetzen(punkte));
 
     }
 }

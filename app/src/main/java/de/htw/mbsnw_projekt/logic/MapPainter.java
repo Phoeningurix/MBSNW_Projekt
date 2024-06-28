@@ -13,6 +13,8 @@ public interface MapPainter {
 
     void zielHinzufuegen(Context context, Zielort zielort);
 
+    void alleZielorteHinzufuegen(Context context, List<Zielort> zielorte);
+
     void punktHinzufuegen(Punkt punkt);
 
     void punkteSetzen(List<Punkt> punkte);

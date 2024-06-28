@@ -38,6 +38,10 @@ public class MapPainterImpl implements MapPainter {
 
     private final List<Marker> markerList;
 
+    private Drawable markerIconBlau;
+
+    private Drawable markerIconGruen;
+
     public MapPainterImpl(MapView mapView, Context activityContext) {
 
         map = mapView;
@@ -61,11 +65,9 @@ public class MapPainterImpl implements MapPainter {
 
         markerList = new ArrayList<>();
 
-    }
+        markerIconBlau = ResourcesCompat.getDrawable(App.getAndroidApp().getResources(), R.drawable.marker_blau1, null);
+        markerIconGruen = ResourcesCompat.getDrawable(App.getAndroidApp().getResources(), R.drawable.marker_gruen1, null);
 
-    public void zielHinzufuegen(Context context, Zielort zielort) {
-        Drawable markerIconBlau = ResourcesCompat.getDrawable(App.getAndroidApp().getResources(), R.drawable.marker_blau1, null);
-        Drawable markerIconGruen = ResourcesCompat.getDrawable(App.getAndroidApp().getResources(), R.drawable.marker_gruen1, null);
         if (markerIconBlau == null || markerIconGruen == null) {
             Log.w(TAG, "zielHinzufuegen: Marker Drawable wurde nicht gefunden");
             return;
@@ -73,6 +75,9 @@ public class MapPainterImpl implements MapPainter {
         markerIconBlau = rescaleDrawable(markerIconBlau, 60, 60);
         markerIconGruen = rescaleDrawable(markerIconGruen, 60, 60);
 
+    }
+
+    public void zielHinzufuegen(Context context, Zielort zielort) {
         for (Marker m : markerList) {
             m.setIcon(markerIconBlau);
             m.setAlpha(0.5f);
@@ -91,6 +96,24 @@ public class MapPainterImpl implements MapPainter {
         markerList.add(marker);
         map.getOverlays().add(marker);
         map.getController().setCenter(punkt);
+    }
+
+    public void alleZielorteHinzufuegen(Context context, List<Zielort> zielorte) {
+        for (Zielort zielort: zielorte) {
+            Marker marker = new Marker(map);
+            GeoPoint punkt = zielort.toGeopoint();
+            marker.setPosition(punkt);
+            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+            marker.setIcon(markerIconBlau);
+            marker.setAlpha(0.5f);
+            marker.setOnMarkerClickListener((marker1, mapView) -> {
+                mapView.getController().setZoom(20.0);
+                mapView.getController().setCenter(punkt);
+                return true;
+            });
+            markerList.add(marker);
+            map.getOverlays().add(marker);
+        }
     }
 
     public Drawable rescaleDrawable(Drawable drawable, int width, int height) {

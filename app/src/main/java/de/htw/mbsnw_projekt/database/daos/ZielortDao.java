@@ -33,7 +33,7 @@ public interface ZielortDao {
     @Query("SELECT zielort.* FROM zielort, ziel  WHERE ziel.zielort_id = zielort.zielort_id AND ziel.spiel_id = :spielId AND ziel.timestamp IS NULL ORDER BY ziel.reihenfolge ASC LIMIT 1")
     LiveData<Zielort> getAktuellenZielort(int spielId);
 
-    @Query("SELECT zielort.* FROM zielort, ziel  WHERE ziel.zielort_id = zielort.zielort_id AND ziel.spiel_id = :spielId AND ziel.timestamp IS NULL ORDER BY ziel.reihenfolge ASC")
+    @Query("SELECT zielort.* FROM zielort, ziel  WHERE ziel.zielort_id = zielort.zielort_id AND ziel.spiel_id = :spielId ORDER BY ziel.reihenfolge ASC")
     LiveData<List<Zielort>> getAlleSpielZielorte(int spielId);
 
 }
