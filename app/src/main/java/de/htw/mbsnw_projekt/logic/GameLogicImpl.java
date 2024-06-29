@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import de.htw.mbsnw_projekt.app.App;
 import de.htw.mbsnw_projekt.database.models.Spiel;
 import de.htw.mbsnw_projekt.database.models.Ziel;
 
@@ -54,7 +55,8 @@ public class GameLogicImpl implements GameLogic {
     // TODO: 02.06.2024 Implementierung
     @Override
     public void spielBeenden(Spiel spiel) {
-
+        spiel.setEndTimestamp(LocalDateTime.now());
+        App.getRepository().update(spiel);
     }
 
     @Override

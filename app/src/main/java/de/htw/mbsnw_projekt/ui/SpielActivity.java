@@ -37,6 +37,7 @@ import de.htw.mbsnw_projekt.logic.GameLogic;
 import de.htw.mbsnw_projekt.logic.GeoTrackingService;
 import de.htw.mbsnw_projekt.logic.MapPainter;
 import de.htw.mbsnw_projekt.logic.MapPainterImpl;
+import de.htw.mbsnw_projekt.ui.navigation_drawer.MainMenuActivity;
 import de.htw.mbsnw_projekt.view_models.SpielViewModel;
 
 public class SpielActivity extends AppCompatActivity {
@@ -58,6 +59,8 @@ public class SpielActivity extends AppCompatActivity {
 
     private MapPainter mapPainter;
 
+    private Button returnButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +77,7 @@ public class SpielActivity extends AppCompatActivity {
             return insets;
         });
 
+        //Set-Up
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("spielBundle");
         Spiel spiel = null;
@@ -98,10 +102,12 @@ public class SpielActivity extends AppCompatActivity {
         nextZiel = findViewById(R.id.next_ziel);
         timer = findViewById(R.id.timer);
         focusOnPlayer = findViewById(R.id.center_on_player);
+        returnButton = findViewById(R.id.return_button);
 
         nextZiel.setVisibility(View.GONE);
+        returnButton.setVisibility(View.GONE);
 
-        map = (MapView) findViewById(R.id.map);
+        map = findViewById(R.id.map);
         mapPainter = new MapPainterImpl(map, this);
 
         /*mapPainter.punktHinzufuegen(new Punkt(52.761384, 13.234324, LocalDateTime.now().minusSeconds(20), viewModel.getAktuellesSpiel().getId()));
@@ -109,26 +115,7 @@ public class SpielActivity extends AppCompatActivity {
         mapPainter.punktHinzufuegen(new Punkt(52.760000, 13.123456, LocalDateTime.now(), viewModel.getAktuellesSpiel().getId()));
         */
 
-        viewModel.getSpielPunkte().observe(this, punkte -> mapPainter.punkteSetzen(punkte));
-
-        Marker playerMarker = new Marker(map);
-        Drawable playerIcon = ResourcesCompat.getDrawable(App.getAndroidApp().getResources(), R.drawable.marker_player, null);
-        playerIcon = mapPainter.rescaleDrawable(playerIcon, 60, 60);
-        playerMarker.setIcon(playerIcon);
-        playerMarker.setAlpha(0.75f);
-        playerMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
-
-        viewModel.getLatestPunkt().observe(this, punkt -> {
-            if (punkt != null) {
-                playerMarker.setPosition(punkt.toGeopoint());
-                map.getOverlays().add(playerMarker);
-                if (App.getGeoLogic().getEntfernung(viewModel.getAktuellesZielortObj(), punkt) <= viewModel.getMinAbstandZumZiel()) {
-                    nextZiel.setVisibility(View.VISIBLE);
-                } else {
-                    nextZiel.setVisibility(View.GONE);
-                }
-            }
-        });
+        //Spiele Ausgeben
 
         Toast.makeText(this, "Aktuelles Spiel: " + aktuellesSpiel, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onCreate: Aktuelles Spiel: " + aktuellesSpiel);
@@ -141,6 +128,7 @@ public class SpielActivity extends AppCompatActivity {
 
         });
 
+        //Text setzen (und Karte updaten)
         viewModel.getSpielZiele().observe(this, list -> {
             String text = (gameLogic.getCurrentZielIndex(list) + 1) + " / " + list.size();
             zielCounter.setText(text);
@@ -153,24 +141,59 @@ public class SpielActivity extends AppCompatActivity {
             } else {
                 zielName.setText("Ziel");
                 Log.d(TAG, "onCreate: getAktuellenZielort gibt null zurück.");
+                returnButton.setVisibility(View.VISIBLE);
+                viewModel.spielBeenden();
             }
         });
 
-        nextZiel.setOnClickListener(this::onNextZielButtonClicked);
+        viewModel.getSpielPunkte().observe(this, punkte -> mapPainter.punkteSetzen(punkte));
 
+        Marker playerMarker = new Marker(map);
+        Drawable playerIcon = ResourcesCompat.getDrawable(App.getAndroidApp().getResources(), R.drawable.marker_player, null);
+        playerIcon = mapPainter.rescaleDrawable(playerIcon, 60, 60);
+        playerMarker.setIcon(playerIcon);
+        playerMarker.setAlpha(0.75f);
+        playerMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+
+
+        viewModel.getLatestPunkt().observe(this, punkt -> {
+            if (punkt != null && viewModel.getAktuellesZielortObj() != null) {
+                playerMarker.setPosition(punkt.toGeopoint());
+                map.getOverlays().add(playerMarker);
+                if (App.getGeoLogic().getEntfernung(viewModel.getAktuellesZielortObj(), punkt) <= viewModel.getMinAbstandZumZiel()) {
+                    nextZiel.setVisibility(View.VISIBLE);
+                } else {
+                    nextZiel.setVisibility(View.GONE);
+                }
+            }
+        });
+
+         //Countdown
         viewModel.setUpCountDown(millisLeft -> timer.setText(App.getGameLogic().millisToString(millisLeft)));
 
+        //Tracking starten
         startTrackingService();
 
+        //Buttons
         focusOnPlayer.setOnClickListener(this::onFocusOnPlayerButtonClicked);
+        nextZiel.setOnClickListener(this::onNextZielButtonClicked);
+        returnButton.setOnClickListener(this::returnToHomeMenu);
 
     }
 
+    /**
+     * Ziel erreichen
+     * @param view view
+     */
     private void onNextZielButtonClicked(View view) {
         viewModel.finishAktuellesZiel();
         nextZiel.setVisibility(View.GONE);
     }
 
+    /**
+     * Auf Spieler fokussieren und zoomen
+     * @param view view
+     */
     private void onFocusOnPlayerButtonClicked(View view) {
         if (viewModel.getAktuellesPunktObj()!=null) {
             map.getController().setCenter(viewModel.getAktuellesPunktObj().toGeopoint());
@@ -178,6 +201,9 @@ public class SpielActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Startet tracking
+     */
     private void startTrackingService() {
         Intent intent = new Intent(this.getApplicationContext(), GeoTrackingService.class);
         intent.setAction(GeoTrackingService.START_ACTION);
@@ -189,10 +215,23 @@ public class SpielActivity extends AppCompatActivity {
         startService(intent);
     }
 
+    /**
+     * Stoppt tracking
+     */
     private void stopTrackingService() {
         Intent intent = new Intent(this.getApplicationContext(), GeoTrackingService.class);
         intent.setAction(GeoTrackingService.STOP_ACTION);
         startService(intent);
+        Log.d(TAG, "stopTrackingService: Stopped Tracking Service");
+    }
+
+    /**
+     * Zurück zum Home Menu
+     */
+    private void returnToHomeMenu(View view) {
+        Intent intent = new Intent(this, MainMenuActivity.class);
+        startActivity(intent);
+        stopTrackingService();
     }
 
 }

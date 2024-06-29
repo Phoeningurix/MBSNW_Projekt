@@ -45,6 +45,8 @@ public class GeoTrackingService extends Service {
 
     private Spiel aktuellesSpiel;
 
+    // TODO: 29.06.2024 Irgendwie machen dass Spiel beendet wird wenn Zeit alle
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {

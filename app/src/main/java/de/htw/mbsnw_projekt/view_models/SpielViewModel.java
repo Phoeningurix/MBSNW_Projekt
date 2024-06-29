@@ -45,6 +45,8 @@ public class SpielViewModel extends ViewModel {
 
     private final LiveData<List<Punkt>> spielPunkte;
 
+    private  CountDownTimer countDownTimer;
+
     public SpielViewModel(Spiel aktuellesSpiel) {
         this.aktuellesSpiel = aktuellesSpiel;
         repository = App.getRepository();
@@ -99,19 +101,43 @@ public class SpielViewModel extends ViewModel {
         return spielPunkte;
     }
 
+    public Zielort getAktuellesZielortObj() {
+        return aktuellesZielortObj;
+    }
+
+    /**
+     * Ziel erreichen
+     */
     public void finishAktuellesZiel() {
         if (aktuellesZielObj != null) {
+            Log.d(TAG, "finishAktuellesZiel: akutelles Ziel beendet");
             aktuellesZielObj.setTimestamp(LocalDateTime.now());
             repository.update(aktuellesZielObj);
         }
     }
 
+    /**
+     * Beendet aktuelles Spiel
+     */
+    public void spielBeenden() {
+        Log.d(TAG, "spielBeenden: Aktuelles Spiel beenden");
+        if (aktuellesSpiel != null) {
+            App.getGameLogic().spielBeenden(aktuellesSpiel);
+            countDownTimer.cancel();
+            Log.d(TAG, "spielBeenden: Spiel beendet");
+        }
+    }
+
+    /**
+     * Spiel Countdown darstellen
+     * @param updateTextView consumer
+     */
     public void setUpCountDown(Consumer<Long> updateTextView) {
 
         // TODO: 02.06.2024 Countdown
         // https://stackoverflow.com/questions/10032003/how-to-make-a-countdown-timer-in-android
 
-        new CountDownTimer(App.getGameLogic().getTimeLeft(aktuellesSpiel), 1000) {
+        countDownTimer = new CountDownTimer(App.getGameLogic().getTimeLeft(aktuellesSpiel), 1000) {
             public void onTick(long millisUntilFinished) {
                 updateTextView.accept(millisUntilFinished);
             }
@@ -125,7 +151,5 @@ public class SpielViewModel extends ViewModel {
     }
 
 
-    public Zielort getAktuellesZielortObj() {
-        return aktuellesZielortObj;
-    }
+
 }
