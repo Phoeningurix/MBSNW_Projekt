@@ -9,22 +9,22 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/nav_home"
-            android:title="Home"/>
+            android:title="Start"/>
 
         <item
-            android:id="@+id/nav_settings"
+            android:id="@+id/nav_stats"
             android:icon="@drawable/nav_settings"
-            android:title="Settings"/>
+            android:title="Statistiken"/>
 
         <item
-            android:id="@+id/nav_share"
+            android:id="@+id/nav_listen"
             android:icon="@drawable/nav_share"
-            android:title="Share"/>
+            android:title="Ortlisten"/>
 
         <item
             android:id="@+id/nav_spiele"
             android:icon="@drawable/nav_about"
-            android:title="Info"/>
+            android:title="Spiele"/>
 
     </group>
 

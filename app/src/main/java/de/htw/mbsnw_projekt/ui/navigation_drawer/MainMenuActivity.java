@@ -92,10 +92,10 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
 
         if (menuItem.getItemId() == R.id.nav_home) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
-        } else if (menuItem.getItemId() == R.id.nav_settings) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
-        } else if (menuItem.getItemId() == R.id.nav_share) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShareFragment()).commit();
+        } else if (menuItem.getItemId() == R.id.nav_stats) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StatsFragment()).commit();
+        } else if (menuItem.getItemId() == R.id.nav_listen) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ListenFragment()).commit();
         } else if (menuItem.getItemId() == R.id.nav_spiele) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SpieleFragment()).commit();
         } else if (menuItem.getItemId() == R.id.nav_exit) {
