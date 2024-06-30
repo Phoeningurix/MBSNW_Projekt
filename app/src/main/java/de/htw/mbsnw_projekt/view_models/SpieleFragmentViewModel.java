@@ -21,6 +21,10 @@ public class SpieleFragmentViewModel extends ViewModel {
         alleSpiele = repository.getSpiele();
     }
 
+    /**
+     * Alle Spiele zurückgeben
+     * @return Spiel-Liste
+     */
     public LiveData<List<Spiel>> getAlleSpiele() {
         return alleSpiele;
     }

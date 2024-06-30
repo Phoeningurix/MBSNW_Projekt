@@ -18,6 +18,10 @@ public abstract class AbstractRepository implements Repository {
         handler = new Handler(Looper.getMainLooper());
     }
 
+    /**
+     * Führt eine Datenbankanfrage auf einem Backgroundthread aus
+     * @param runnables Datenbankanfrage
+     */
     protected void doInBackground(Runnable... runnables) {
         Thread t = new Thread(() -> {
             for (Runnable r : runnables) {
@@ -28,6 +32,11 @@ public abstract class AbstractRepository implements Repository {
         t.start();
     }
 
+    /**
+     * Führt eine Datenbankanfrage auf einem Backgroundthread aus und führt eine Task aus
+     * @param getter Datenbankanfrage
+     * @param task Task
+     */
     protected <E> void doInBackground(Callable<E> getter, Consumer<E> task) {
         doInBackground(() -> {
             try {

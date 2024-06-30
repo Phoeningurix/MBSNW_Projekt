@@ -20,6 +20,11 @@ public class CreateSpielViewModel extends ViewModel {
         repository = App.getRepository();
     }
 
+    /**
+     * Spiel erstellen und verwenden
+     * @param spiel Spiel
+     * @param taskAfter Spiel verwenden
+     */
     public void createSpiel(Spiel spiel, Consumer<Spiel> taskAfter) {
         if (spiel.getEndTimestamp() != null) {
             Log.e(TAG, "createSpiel: hat schon ein EndTimeStamp");

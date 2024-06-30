@@ -77,6 +77,8 @@ public class MapPainterImpl implements MapPainter {
 
     }
 
+
+    @Override
     public void zielHinzufuegen(Context context, Zielort zielort) {
         for (Marker m : markerList) {
             m.setIcon(markerIconBlau);
@@ -98,6 +100,8 @@ public class MapPainterImpl implements MapPainter {
         map.getController().setCenter(punkt);
     }
 
+
+    @Override
     public void alleZielorteHinzufuegen(Context context, List<Zielort> zielorte) {
         for (Zielort zielort: zielorte) {
             Marker marker = new Marker(map);
@@ -116,15 +120,20 @@ public class MapPainterImpl implements MapPainter {
         }
     }
 
+
+    @Override
     public Drawable rescaleDrawable(Drawable drawable, int width, int height) {
         Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
         return new BitmapDrawable(App.getAndroidApp().getResources(), Bitmap.createScaledBitmap(bitmap, width, height, true));
     }
 
+
+    @Override
     public void punktHinzufuegen(Punkt punkt) {
         wegPunkte.add(punkt.toGeopoint());
         line.setPoints(wegPunkte);
     }
+
 
     @Override
     public void punkteSetzen(List<Punkt> punkte) {

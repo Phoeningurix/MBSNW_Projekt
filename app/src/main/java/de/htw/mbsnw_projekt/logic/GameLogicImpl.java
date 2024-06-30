@@ -52,7 +52,6 @@ public class GameLogicImpl implements GameLogic {
         return spielDauer - diff;
     }
 
-    // TODO: 02.06.2024 Implementierung
     @Override
     public void spielBeenden(Spiel spiel) {
         spiel.setEndTimestamp(LocalDateTime.now());
@@ -64,6 +63,7 @@ public class GameLogicImpl implements GameLogic {
 
     }
 
+    @Override
     public String millisToString(long millis) {
 
         long zeit = millis / 1000;

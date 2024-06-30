@@ -90,12 +90,19 @@ public class SpieleAdapter extends RecyclerView.Adapter<SpieleAdapter.SpieleHold
         return spiele.size();
     }
 
+    /**
+     * spiele setzen
+     * @param spiele Spiel-Liste
+     */
     public void setSpiele(List<Spiel> spiele) {
         this.spiele = spiele;
         // TODO: 27.06.2024 Ändern!!!
         notifyDataSetChanged();
     }
 
+    /**
+     * Spiele Holder für RecyclerView Items
+     */
     public class SpieleHolder extends RecyclerView.ViewHolder {
         private TextView spielNameText;
         private TextView spielZeitText;

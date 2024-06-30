@@ -16,11 +16,20 @@ public class HomeViewModel extends ViewModel {
         // TODO: 26.05.2024
     }
 
+    /**
+     * Aktuelles Spiel zurückgeben
+     * @param task Task
+     */
     public void getAktuellesSpiel(Consumer<Spiel> task) {
         repository.getAktuellesSpiel(task);
 
     }
 
+    /**
+     * Zurückgeben ob ein aktuelles Spiel existiert
+     * @param taskErfolgreich Task wenn Spiel existiert
+     * @param taskNichtErfolgreich Task wenn Spiel nicht existiert
+     */
     public void existiertAktuellesSpiel(Runnable taskErfolgreich, Runnable taskNichtErfolgreich) {
         getAktuellesSpiel(spiel -> {
             if(spiel == null) {
