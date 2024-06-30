@@ -141,6 +141,12 @@ public class SpielActivity extends AppCompatActivity {
             } else {
                 zielName.setText("Ziel");
                 Log.d(TAG, "onCreate: getAktuellenZielort gibt null zurück.");
+            }
+        });
+
+        viewModel.getNichterreichteZiele().observe(this, ziele -> {
+            if (ziele != null && ziele.isEmpty()) {
+                Log.d(TAG, "onCreate: Alle Ziele erreicht");
                 returnButton.setVisibility(View.VISIBLE);
                 viewModel.spielBeenden();
                 stopTrackingService();
@@ -169,7 +175,7 @@ public class SpielActivity extends AppCompatActivity {
             }
         });
 
-         //Countdown
+        //Countdown
         viewModel.setUpCountDown(millisLeft -> timer.setText(App.getGameLogic().millisToString(millisLeft)));
 
         //Tracking starten
@@ -184,6 +190,7 @@ public class SpielActivity extends AppCompatActivity {
 
     /**
      * Ziel erreichen
+     *
      * @param view view
      */
     private void onNextZielButtonClicked(View view) {
@@ -193,10 +200,11 @@ public class SpielActivity extends AppCompatActivity {
 
     /**
      * Auf Spieler fokussieren und zoomen
+     *
      * @param view view
      */
     private void onFocusOnPlayerButtonClicked(View view) {
-        if (viewModel.getAktuellesPunktObj()!=null) {
+        if (viewModel.getAktuellesPunktObj() != null) {
             map.getController().setCenter(viewModel.getAktuellesPunktObj().toGeopoint());
             map.getController().setZoom(20.0);
         }

@@ -2,6 +2,7 @@ package de.htw.mbsnw_projekt.view_models;
 
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,8 @@ public class SpielViewModel extends ViewModel {
 
     private  CountDownTimer countDownTimer;
 
+    private final LiveData<List<Ziel>> nichterreichteZiele;
+
     public SpielViewModel(Spiel aktuellesSpiel) {
         this.aktuellesSpiel = aktuellesSpiel;
         repository = App.getRepository();
@@ -55,10 +58,12 @@ public class SpielViewModel extends ViewModel {
         aktuellerZielort = repository.getAktuellenZielort(aktuellesSpiel.getId());
         latestPunkt = repository.getLatestPunkt(aktuellesSpiel.getId());
         spielPunkte = repository.getSpielPunkte(aktuellesSpiel.getId());
+        nichterreichteZiele = repository.getNichtErreichteSpielZiele(aktuellesSpiel.getId());
 
         aktuellesZiel.observeForever(ziel -> aktuellesZielObj = ziel);
         aktuellerZielort.observeForever(zielort -> aktuellesZielortObj = zielort);
         latestPunkt.observeForever(punkt -> aktuellesPunktObj = punkt);
+
     }
 
     public double getMinAbstandZumZiel() {
@@ -103,6 +108,10 @@ public class SpielViewModel extends ViewModel {
 
     public Zielort getAktuellesZielortObj() {
         return aktuellesZielortObj;
+    }
+
+    public LiveData<List<Ziel>> getNichterreichteZiele() {
+        return nichterreichteZiele;
     }
 
     /**

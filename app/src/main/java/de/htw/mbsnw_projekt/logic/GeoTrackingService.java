@@ -26,6 +26,11 @@ import androidx.core.content.ContextCompat;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import de.htw.mbsnw_projekt.R;
 import de.htw.mbsnw_projekt.app.App;
@@ -44,6 +49,10 @@ public class GeoTrackingService extends Service {
     private LocationManager locationManager;
 
     private Spiel aktuellesSpiel;
+
+    private boolean isRunning = false;
+
+    private Future<?> timerFuture;
 
     // TODO: 29.06.2024 Irgendwie machen dass Spiel beendet wird wenn Zeit alle
 
@@ -66,7 +75,7 @@ public class GeoTrackingService extends Service {
                 //handleSingleLocation();
                 return START_STICKY;
             case STOP_ACTION:
-                stopSelf();
+                stop();
             default:
                 return super.onStartCommand(intent, flags, startId);
         }
@@ -81,8 +90,33 @@ public class GeoTrackingService extends Service {
 
     private void start() {
         createNotificationChannel();
-        getLocation();
+        if (!isRunning) {
+            getLocation();
+            startGameTimer();
+        }
         startForeground(1, getNotification());
+        isRunning = true;
+    }
+
+    private void startGameTimer() {
+        ScheduledExecutorService service = Executors.newScheduledThreadPool(0);
+        if (timerFuture != null && !timerFuture.isCancelled() && !timerFuture.isDone()) {
+            timerFuture.cancel(false);
+            timerFuture = null;
+        }
+        timerFuture = service.schedule(() -> {
+            App.getGameLogic().spielBeenden(aktuellesSpiel);
+            stop();
+        }, aktuellesSpiel.getTimeLimit(), TimeUnit.MILLISECONDS);
+    }
+
+    private void stop() {
+        isRunning = false;
+        if (timerFuture != null && !timerFuture.isCancelled() && !timerFuture.isDone()) {
+            timerFuture.cancel(false);
+            timerFuture = null;
+        }
+        stopSelf();
     }
 
 
@@ -143,10 +177,6 @@ public class GeoTrackingService extends Service {
                 // game runs
                 App.getRepository().insert(new Punkt(location.getLatitude(), location.getLongitude(), LocalDateTime.now(), aktuellesSpiel.getId()));
 
-            } else {
-                // game over
-                Log.d(TAG, "onLocationChanged: Stopping Service!!!");
-                stopSelf();
             }
         }
 
