@@ -1,5 +1,8 @@
 package de.htw.mbsnw_projekt.logic;
 
+import java.util.List;
+
+import de.htw.mbsnw_projekt.app.App;
 import de.htw.mbsnw_projekt.database.models.Punkt;
 import de.htw.mbsnw_projekt.database.models.Zielort;
 
@@ -28,4 +31,12 @@ public class GeoLogicImpl implements GeoLogic {
         return p1.toGeopoint().distanceToAsDouble(p2.toGeopoint());
     }
 
+    @Override
+    public double streckeBerechnen(List<Punkt> punkte) {
+        double strecke = 0;
+        for (int i = 0; i < punkte.size() - 1; i++) {
+            strecke += getEntfernung(punkte.get(i), punkte.get(i+1));
+        }
+        return strecke;
+    }
 }

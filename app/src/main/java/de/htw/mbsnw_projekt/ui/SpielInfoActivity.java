@@ -145,11 +145,7 @@ public class SpielInfoActivity extends AppCompatActivity {
 
         viewModel.getAlleSpielPunkte().observe(this, punkte -> {
             mapPainter.punkteSetzen(punkte);
-
-            double strecke = 0;
-            for (int i = 0; i < punkte.size() - 1; i++) {
-                strecke += App.getGeoLogic().getEntfernung(punkte.get(i), punkte.get(i+1));
-            }
+            double strecke = App.getGeoLogic().streckeBerechnen(punkte);
             String streckeString = "";
             if (strecke < 1000) {
                 // Weniger als 1000 Meter, Ausgabe in Metern
