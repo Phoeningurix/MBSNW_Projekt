@@ -60,11 +60,20 @@ public class SpieleFragment extends Fragment implements SpielRecyclerView {
 
     @Override
     public void onClick(Spiel spiel) {
-        Intent intent = new Intent(getContext(), SpielInfoActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("aktuellesSpiel", spiel);
-        intent.putExtra("spielBundle", bundle);
-        startActivity(intent);
+
+        if (spiel.getEndTimestamp() != null) {
+            Intent intent = new Intent(getContext(), SpielInfoActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("aktuellesSpiel", spiel);
+            intent.putExtra("spielBundle", bundle);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(getContext(), SpielActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("aktuellesSpiel", spiel);
+            intent.putExtra("spielBundle", bundle);
+            startActivity(intent);
+        }
     }
 
 }

@@ -32,7 +32,6 @@ import de.htw.mbsnw_projekt.view_models.CreateSpielViewModel;
 public class CreateSpielActivity extends AppCompatActivity {
     private static final String TAG = "CreateSpielActivity";
 
-    // TODO: 02.06.2024 Spiel Einstellungen Input
     private Button createSpielButton;
 
     private SeekBar timeLimitSeekBar;
@@ -122,7 +121,6 @@ public class CreateSpielActivity extends AppCompatActivity {
     }
 
     private void onCreateSpielButtonClicked(View view) {
-        // TODO: 02.06.2024 read setting from textfields
         Spiel neuesSpiel = new Spiel(LocalDateTime.now(), null, 0, timeLimitSeekBar.getProgress()*1000*60*60);
         viewModel.createSpiel(neuesSpiel, erstelltesSpiel -> {
             zieleErstellen(erstelltesSpiel, zielAnzahlSeekBar.getProgress(), ortlisteID);
