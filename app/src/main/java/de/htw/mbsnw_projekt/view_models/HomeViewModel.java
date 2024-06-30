@@ -1,5 +1,6 @@
 package de.htw.mbsnw_projekt.view_models;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.function.Consumer;
@@ -11,9 +12,16 @@ import de.htw.mbsnw_projekt.database.repositories.Repository;
 public class HomeViewModel extends ViewModel {
 
     private final Repository repository;
+
+    private final LiveData<Spiel> aktuellesSpielLiveData;
+
     public HomeViewModel() {
         repository = App.getRepository();
-        // TODO: 26.05.2024
+        aktuellesSpielLiveData = repository.getAktuellesSpielLiveData();
+    }
+
+    public LiveData<Spiel> getAktuellesSpielLiveData() {
+        return aktuellesSpielLiveData;
     }
 
     /**
@@ -22,7 +30,6 @@ public class HomeViewModel extends ViewModel {
      */
     public void getAktuellesSpiel(Consumer<Spiel> task) {
         repository.getAktuellesSpiel(task);
-
     }
 
     /**

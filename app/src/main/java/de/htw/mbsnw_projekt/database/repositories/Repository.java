@@ -23,12 +23,15 @@ public interface Repository {
 
     void getAktuellesSpiel(Consumer<Spiel> task);
 
+    LiveData<Spiel> getAktuellesSpielLiveData();
+
     LiveData<List<Spiel>> getErfolgreicheSpiele();
 
     LiveData<List<Spiel>> getNichtErfolgreicheSpiele();
 
     void getSpiel(int spielId, Consumer<Spiel> task);
 
+    LiveData<Spiel> getSpielLiveData(int spielId);
 
     //------------------------------------PUNKT------------------------------------
 

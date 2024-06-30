@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
@@ -54,22 +55,15 @@ public class HomeFragment extends Fragment {
 
         //viewModel.getAktuellesSpiel(spiel -> textView.setText(spiel == null ? "null" : spiel.toString()));
 
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        viewModel.existiertAktuellesSpiel(
-                () -> {
-                    startButton.setVisibility(View.INVISIBLE);
-                    resumeButton.setVisibility(View.VISIBLE);
-                },
-                () -> {
-                    startButton.setVisibility(View.VISIBLE);
-                    resumeButton.setVisibility(View.INVISIBLE);
-                }
-        );
+        viewModel.getAktuellesSpielLiveData().observe(getViewLifecycleOwner(), spiel -> {
+            if (spiel == null) {
+                startButton.setVisibility(View.VISIBLE);
+                resumeButton.setVisibility(View.INVISIBLE);
+            } else {
+                startButton.setVisibility(View.INVISIBLE);
+                resumeButton.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void onStartClicked(View view) {
