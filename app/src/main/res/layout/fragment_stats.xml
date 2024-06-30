@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.navigation_drawer.StatsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Statistiken"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"
-        android:textColor="@color/primaryDarkGreen"/>
+        android:text="Spiele gespielt: "
+        android:id="@+id/spiele_anzahl_text"
+        android:textColor="@color/primaryDarkGreen"
+        android:layout_margin="16dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spiele gewonnen: "
+        android:id="@+id/spiele_gewonnen_anzahl_text"
+        android:textColor="@color/primaryDarkGreen"
+        android:layout_margin="16dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spiele_anzahl_text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spiele verloren: "
+        android:id="@+id/spiele_verloren_anzahl_text"
+        android:textColor="@color/primaryDarkGreen"
+        android:layout_margin="16dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spiele_gewonnen_anzahl_text" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
