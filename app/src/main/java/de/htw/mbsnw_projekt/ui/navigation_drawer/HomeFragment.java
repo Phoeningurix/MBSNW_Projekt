@@ -28,7 +28,8 @@ import de.htw.mbsnw_projekt.view_models.HomeViewModel;
 
 public class HomeFragment extends Fragment {
 
-    Button startButton, resumeButton;
+    private Button startButton;
+    private Button resumeButton;
     private HomeViewModel viewModel;
 
     @Override
@@ -44,14 +45,14 @@ public class HomeFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        TextView textView = view.findViewById(R.id.blubtext);
+        //TextView textView = view.findViewById(R.id.blubtext);
         startButton = view.findViewById(R.id.startGameButton);
         resumeButton = view.findViewById(R.id.resumeGameButton);
 
         startButton.setOnClickListener(this::onStartClicked);
         resumeButton.setOnClickListener(this::onResumeClicked);
 
-        viewModel.getAktuellesSpiel(spiel -> textView.setText(spiel == null ? "null" : spiel.toString()));
+        //viewModel.getAktuellesSpiel(spiel -> textView.setText(spiel == null ? "null" : spiel.toString()));
 
 
     }
