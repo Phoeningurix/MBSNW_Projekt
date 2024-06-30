@@ -147,7 +147,6 @@ public class SpielActivity extends AppCompatActivity {
         viewModel.getNichterreichteZiele().observe(this, ziele -> {
             if (ziele != null && ziele.isEmpty()) {
                 Log.d(TAG, "onCreate: Alle Ziele erreicht");
-                returnButton.setVisibility(View.VISIBLE);
                 viewModel.spielBeenden();
                 stopTrackingService();
             }
@@ -172,6 +171,15 @@ public class SpielActivity extends AppCompatActivity {
                 } else {
                     nextZiel.setVisibility(View.GONE);
                 }
+            }
+        });
+
+        viewModel.getSpielLiveData().observe(this, spiel1 -> {
+            if (spiel1.getEndTimestamp() != null) {
+                returnButton.setVisibility(Button.VISIBLE);
+                nextZiel.setVisibility(Button.INVISIBLE);
+            } else {
+                returnButton.setVisibility(Button.GONE);
             }
         });
 

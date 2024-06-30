@@ -98,8 +98,6 @@ public class MainMenuActivity extends AppCompatActivity implements NavigationVie
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ListenFragment()).commit();
         } else if (menuItem.getItemId() == R.id.nav_spiele) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SpieleFragment()).commit();
-        } else if (menuItem.getItemId() == R.id.nav_exit) {
-            Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

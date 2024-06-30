@@ -50,6 +50,8 @@ public class SpielViewModel extends ViewModel {
 
     private final LiveData<List<Ziel>> nichterreichteZiele;
 
+    private final LiveData<Spiel> spielLiveData;
+
     public SpielViewModel(Spiel aktuellesSpiel) {
         this.aktuellesSpiel = aktuellesSpiel;
         repository = App.getRepository();
@@ -59,6 +61,7 @@ public class SpielViewModel extends ViewModel {
         latestPunkt = repository.getLatestPunkt(aktuellesSpiel.getId());
         spielPunkte = repository.getSpielPunkte(aktuellesSpiel.getId());
         nichterreichteZiele = repository.getNichtErreichteSpielZiele(aktuellesSpiel.getId());
+        spielLiveData = repository.getSpielLiveData(aktuellesSpiel.getId());
 
         aktuellesZiel.observeForever(ziel -> aktuellesZielObj = ziel);
         aktuellerZielort.observeForever(zielort -> aktuellesZielortObj = zielort);
@@ -112,6 +115,10 @@ public class SpielViewModel extends ViewModel {
 
     public LiveData<List<Ziel>> getNichterreichteZiele() {
         return nichterreichteZiele;
+    }
+
+    public LiveData<Spiel> getSpielLiveData() {
+        return spielLiveData;
     }
 
     /**

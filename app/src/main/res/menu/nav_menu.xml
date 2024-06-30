@@ -28,14 +28,4 @@
             android:title="Ortlisten"/>
     </group>
 
-    <item
-        android:title="">
-        <menu>
-            <item
-                android:id="@+id/nav_exit"
-                android:icon="@drawable/nav_exit"
-                android:title="Logout"/>
-        </menu>
-    </item>
-
 </menu>

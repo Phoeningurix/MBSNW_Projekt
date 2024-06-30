@@ -30,7 +30,7 @@ public abstract class AppDatabase extends RoomDatabase {
                     instance = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "app_database")
                             .fallbackToDestructiveMigration()
-                            //.addCallback(roomCallback)
+                            .addCallback(roomCallback)
                             .build();
                 }
             }
@@ -42,15 +42,13 @@ public abstract class AppDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            //doInBackground(() -> populateDatabase(instance.noteDao()));
+            doInBackground(() -> populateDatabase(instance.zielortDao()));
         }
     };
 
-    /*private static void populateDatabase(NoteDao noteDao) {
-        noteDao.insert(new Note("Title 1", "Description 1", 1));
-        noteDao.insert(new Note("Title 2", "Description 2", 2));
-        noteDao.insert(new Note("Title 3", "Description 3", 3));
-    }*/
+    private static void populateDatabase(ZielortDao zielortDao) {
+        zielortDao.insert(new Zielort(52.533579, 13.417889, "Wasserturm", 1));
+    }
 
     private static void doInBackground(Runnable r) {
         Thread t = new Thread(r);

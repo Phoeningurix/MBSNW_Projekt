@@ -140,19 +140,19 @@ public class SpielInfoActivity extends AppCompatActivity {
 
         viewModel.getAlleSpielZielorte().observe(this, zielorte -> mapPainter.alleZielorteHinzufuegen(this, zielorte));
 
-        /*viewModel.getAlleSpielPunkte().observe(this, punkte ->{
+        viewModel.getAlleSpielPunkte().observe(this, punkte ->{
             mapPainter.punkteSetzen(punkte);
 
-            double maxLatidude = punkte.stream().map(Punkt::getLatitude).reduce(Double::max).orElse(0.0);
+            /*double maxLatidude = punkte.stream().map(Punkt::getLatitude).reduce(Double::max).orElse(0.0);
             double minLatidude = punkte.stream().map(Punkt::getLatitude).reduce(Double::min).orElse(0.0);
             double maxLongitude = punkte.stream().map(Punkt::getLatitude).reduce(Double::max).orElse(0.0);
             double minLongitude = punkte.stream().map(Punkt::getLatitude).reduce(Double::min).orElse(0.0);
 
             BoundingBox box = map.getBoundingBox();
             box.set(maxLatidude, minLongitude , minLatidude, maxLongitude);
-            map.zoomToBoundingBox(box, false);
+            map.zoomToBoundingBox(box, false);*/
 
-        });*/
+        });
 
     }
 }

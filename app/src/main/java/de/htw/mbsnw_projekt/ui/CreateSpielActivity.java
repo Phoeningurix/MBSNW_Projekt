@@ -122,7 +122,7 @@ public class CreateSpielActivity extends AppCompatActivity {
 
     private void onCreateSpielButtonClicked(View view) {
         long time = timeLimitSeekBar.getProgress() *1000*60*60L;
-        Spiel neuesSpiel = new Spiel(LocalDateTime.now(), null, 0, 30_000);
+        Spiel neuesSpiel = new Spiel(LocalDateTime.now(), null, 0, time);
         viewModel.createSpiel(neuesSpiel, erstelltesSpiel -> {
             zieleErstellen(erstelltesSpiel, zielAnzahlSeekBar.getProgress(), ortlisteID);
 
