@@ -33,6 +33,7 @@ import de.htw.mbsnw_projekt.app.App;
 import de.htw.mbsnw_projekt.database.models.Punkt;
 import de.htw.mbsnw_projekt.database.models.Spiel;
 import de.htw.mbsnw_projekt.database.models.Zielort;
+import de.htw.mbsnw_projekt.logic.GeoLogic;
 import de.htw.mbsnw_projekt.logic.MapPainter;
 import de.htw.mbsnw_projekt.logic.MapPainterImpl;
 import de.htw.mbsnw_projekt.view_models.SpielInfoViewModel;
@@ -57,6 +58,8 @@ public class SpielInfoActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private ImageView spielInfoIcon;
+
+    private TextView streckeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +99,7 @@ public class SpielInfoActivity extends AppCompatActivity {
         spielZeitlimit = findViewById(R.id.spiel_zeit_limit_text);
         toolbar = findViewById(R.id.spiel_info_toolbar);
         spielInfoIcon = findViewById(R.id.spiel_info_icon);
+        streckeText = findViewById(R.id.strecke_text);
 
         viewModel.getNichErreichteZiele().observe(this, ziele -> {
             if (ziele.isEmpty()) {
@@ -114,7 +118,7 @@ public class SpielInfoActivity extends AppCompatActivity {
         mapPainter = new MapPainterImpl(map, this);
 
         viewModel.getAlleSpielZiele().observe(this, ziele -> spielZieleAnzahl.setText("Anzahl Ziele: " + ziele.size()));
-        String zeitlimit = "Zeitlimit: " + ((spiel.getTimeLimit()/1000)/60)/60 + "h";
+        String zeitlimit = "Zeitlimit: " + ((spiel.getTimeLimit() / 1000) / 60) / 60 + "h";
         spielZeitlimit.setText(zeitlimit);
 
         if (ausgewaehltesSpiel.getEndTimestamp() != null) {
@@ -135,13 +139,28 @@ public class SpielInfoActivity extends AppCompatActivity {
         map.getController().setCenter(new GeoPoint(52.520553, 13.408770));
 
 
-
         map.getController().setZoom(13.0);
 
         viewModel.getAlleSpielZielorte().observe(this, zielorte -> mapPainter.alleZielorteHinzufuegen(this, zielorte));
 
-        viewModel.getAlleSpielPunkte().observe(this, punkte ->{
+        viewModel.getAlleSpielPunkte().observe(this, punkte -> {
             mapPainter.punkteSetzen(punkte);
+
+            double strecke = 0;
+            for (int i = 0; i < punkte.size() - 1; i++) {
+                strecke += App.getGeoLogic().getEntfernung(punkte.get(i), punkte.get(i+1));
+            }
+            String streckeString = "";
+            if (strecke < 1000) {
+                // Weniger als 1000 Meter, Ausgabe in Metern
+                streckeString = String.format("%.0f m", strecke);
+            } else {
+                // 1000 Meter oder mehr, Ausgabe in Kilometern
+                streckeString = String.format("%.2f km", strecke / 1000);
+            }
+            streckeText.setText("Strecke: " + streckeString);
+
+            // TODO: 30.06.2024 Zu schön formatiertem String + TextView
 
             /*double maxLatidude = punkte.stream().map(Punkt::getLatitude).reduce(Double::max).orElse(0.0);
             double minLatidude = punkte.stream().map(Punkt::getLatitude).reduce(Double::min).orElse(0.0);

@@ -23,5 +23,9 @@ public class GeoLogicImpl implements GeoLogic {
         return zielort.toGeopoint().distanceToAsDouble(punkt.toGeopoint());
     }
 
+    @Override
+    public double getEntfernung(Punkt p1, Punkt p2) {
+        return p1.toGeopoint().distanceToAsDouble(p2.toGeopoint());
+    }
 
 }

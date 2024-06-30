@@ -2,6 +2,7 @@ package de.htw.mbsnw_projekt.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,6 +62,10 @@ public class SpielActivity extends AppCompatActivity {
 
     private Button returnButton;
 
+    private Button aufgebenButton;
+
+    private TextView gewonnenText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,9 +108,15 @@ public class SpielActivity extends AppCompatActivity {
         timer = findViewById(R.id.timer);
         focusOnPlayer = findViewById(R.id.center_on_player);
         returnButton = findViewById(R.id.return_button);
+        aufgebenButton = findViewById(R.id.aufgeben_button);
+        gewonnenText = findViewById(R.id.gewonnen_text);
 
-        nextZiel.setVisibility(View.GONE);
-        returnButton.setVisibility(View.GONE);
+        nextZiel.setVisibility(View.INVISIBLE);
+        returnButton.setVisibility(View.INVISIBLE);
+        aufgebenButton.setVisibility(View.VISIBLE);
+        gewonnenText.setVisibility(View.INVISIBLE);
+
+        gewonnenText.setTextColor(getColor(R.color.primaryGreen));
 
         map = findViewById(R.id.map);
         mapPainter = new MapPainterImpl(map, this);
@@ -148,7 +159,12 @@ public class SpielActivity extends AppCompatActivity {
             if (ziele != null && ziele.isEmpty()) {
                 Log.d(TAG, "onCreate: Alle Ziele erreicht");
                 viewModel.spielBeenden();
+                gewonnenText.setTextColor(getColor(R.color.primaryGreen));
+                gewonnenText.setText("Gewonnen");
                 stopTrackingService();
+            } else {
+                gewonnenText.setTextColor(getColor(R.color.red));
+                gewonnenText.setText("Verloren");
             }
         });
 
@@ -169,7 +185,7 @@ public class SpielActivity extends AppCompatActivity {
                 if (App.getGeoLogic().getEntfernung(viewModel.getAktuellesZielortObj(), punkt) <= viewModel.getMinAbstandZumZiel()) {
                     nextZiel.setVisibility(View.VISIBLE);
                 } else {
-                    nextZiel.setVisibility(View.GONE);
+                    nextZiel.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -178,8 +194,10 @@ public class SpielActivity extends AppCompatActivity {
             if (spiel1.getEndTimestamp() != null) {
                 returnButton.setVisibility(Button.VISIBLE);
                 nextZiel.setVisibility(Button.INVISIBLE);
+                aufgebenButton.setVisibility(Button.INVISIBLE);
+                gewonnenText.setVisibility(TextView.VISIBLE);
             } else {
-                returnButton.setVisibility(Button.GONE);
+                returnButton.setVisibility(Button.INVISIBLE);
             }
         });
 
@@ -193,6 +211,7 @@ public class SpielActivity extends AppCompatActivity {
         focusOnPlayer.setOnClickListener(this::onFocusOnPlayerButtonClicked);
         nextZiel.setOnClickListener(this::onNextZielButtonClicked);
         returnButton.setOnClickListener(this::returnToHomeMenu);
+        aufgebenButton.setOnClickListener(v -> viewModel.spielBeenden());
 
     }
 
@@ -203,7 +222,7 @@ public class SpielActivity extends AppCompatActivity {
      */
     private void onNextZielButtonClicked(View view) {
         viewModel.finishAktuellesZiel();
-        nextZiel.setVisibility(View.GONE);
+        nextZiel.setVisibility(View.INVISIBLE);
     }
 
     /**

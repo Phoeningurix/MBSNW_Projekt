@@ -13,4 +13,7 @@ public interface GeoLogic {
      */
     double getEntfernung(Zielort zielort, Punkt punkt);
 
+    double getEntfernung(Punkt p1, Punkt p2);
+
+
 }

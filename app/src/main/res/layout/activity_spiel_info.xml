@@ -54,6 +54,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spiel_anzahl_ziele_text" />
 
+    <TextView
+        android:id="@+id/strecke_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Strecke: "
+        android:textColor="@color/primaryDarkGreen"
+        android:textSize="20sp"
+        android:layout_margin="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spiel_dauer_text" />
 
     <ImageView
         android:id="@+id/spiel_info_icon"
@@ -69,9 +79,9 @@
     <org.osmdroid.views.MapView
         android:id="@+id/spiel_info_map"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="460dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/spiel_dauer_text" />
+        app:layout_constraintTop_toBottomOf="@+id/strecke_text" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
