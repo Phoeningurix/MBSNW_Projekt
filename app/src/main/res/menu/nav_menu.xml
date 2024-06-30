@@ -12,20 +12,20 @@
             android:title="Start"/>
 
         <item
-            android:id="@+id/nav_stats"
-            android:icon="@drawable/nav_settings"
-            android:title="Statistiken"/>
-
-        <item
-            android:id="@+id/nav_listen"
-            android:icon="@drawable/nav_share"
-            android:title="Ortlisten"/>
-
-        <item
             android:id="@+id/nav_spiele"
             android:icon="@drawable/nav_about"
             android:title="Spiele"/>
 
+
+        <item
+            android:id="@+id/nav_stats"
+            android:icon="@drawable/nav_stats"
+            android:title="Statistiken"/>
+
+        <item
+            android:id="@+id/nav_listen"
+            android:icon="@drawable/nav_listen"
+            android:title="Ortlisten"/>
     </group>
 
     <item

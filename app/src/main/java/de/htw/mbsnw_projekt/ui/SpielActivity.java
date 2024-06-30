@@ -143,6 +143,7 @@ public class SpielActivity extends AppCompatActivity {
                 Log.d(TAG, "onCreate: getAktuellenZielort gibt null zurück.");
                 returnButton.setVisibility(View.VISIBLE);
                 viewModel.spielBeenden();
+                stopTrackingService();
             }
         });
 
@@ -231,7 +232,6 @@ public class SpielActivity extends AppCompatActivity {
     private void returnToHomeMenu(View view) {
         Intent intent = new Intent(this, MainMenuActivity.class);
         startActivity(intent);
-        stopTrackingService();
     }
 
 }
