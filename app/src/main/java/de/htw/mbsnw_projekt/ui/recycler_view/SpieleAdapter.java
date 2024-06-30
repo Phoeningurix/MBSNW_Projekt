@@ -49,7 +49,6 @@ public class SpieleAdapter extends RecyclerView.Adapter<SpieleAdapter.SpieleHold
         Spiel currentSpiel = spiele.get(position);
         String name = String.format(Locale.GERMAN, "Spiel Nr. %d: %te.%<tB.%<tY", currentSpiel.getId(), currentSpiel.getStartTimestamp());
         holder.spielNameText.setText(name);
-        // TODO: 27.06.2024 Spieldauer berechnen
 
         if (currentSpiel.getEndTimestamp() != null) {
             Duration duration = Duration.between(currentSpiel.getStartTimestamp(), currentSpiel.getEndTimestamp());

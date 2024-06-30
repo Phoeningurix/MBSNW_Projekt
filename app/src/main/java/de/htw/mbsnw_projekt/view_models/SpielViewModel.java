@@ -150,7 +150,6 @@ public class SpielViewModel extends ViewModel {
      */
     public void setUpCountDown(Consumer<Long> updateTextView) {
 
-        // TODO: 02.06.2024 Countdown
         // https://stackoverflow.com/questions/10032003/how-to-make-a-countdown-timer-in-android
 
         countDownTimer = new CountDownTimer(App.getGameLogic().getTimeLeft(aktuellesSpiel), 1000) {

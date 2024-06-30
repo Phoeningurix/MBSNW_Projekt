@@ -42,12 +42,17 @@ public abstract class AppDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            doInBackground(() -> populateDatabase(instance.zielortDao()));
+            doInBackground(() -> populateDatabase(instance.zielortDao(), instance.ortListeDao()));
         }
     };
 
-    private static void populateDatabase(ZielortDao zielortDao) {
+    private static void populateDatabase(ZielortDao zielortDao, OrtListeDao ortListeDao) {
+        // TODO: 30.06.2024 Zielorte hinzufügen
+        ortListeDao.insert(new OrtListe(false, "Default"));
         zielortDao.insert(new Zielort(52.533579, 13.417889, "Wasserturm", 1));
+        zielortDao.insert(new Zielort(52.455100, 13.524743, "HTW Ufer", 1));
+        zielortDao.insert(new Zielort(52.545587, 13.423519, "Käthe-Kollwitz-Gymnasium", 1));
+        zielortDao.insert(new Zielort(52.543908, 13.424302, "Falafel Aladdin (Prenzlauer Berg)", 1));
     }
 
     private static void doInBackground(Runnable r) {

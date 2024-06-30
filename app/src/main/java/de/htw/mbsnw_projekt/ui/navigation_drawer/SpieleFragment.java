@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -29,6 +30,8 @@ import de.htw.mbsnw_projekt.view_models.SpieleFragmentViewModel;
 public class SpieleFragment extends Fragment implements SpielRecyclerView {
 
     private SpieleFragmentViewModel viewModel;
+
+    private TextView keineSpiele;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,14 +49,19 @@ public class SpieleFragment extends Fragment implements SpielRecyclerView {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_spiele);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
+        keineSpiele = view.findViewById(R.id.no_spiele_text);
+
         SpieleAdapter adapter = new SpieleAdapter(this);
         recyclerView.setAdapter(adapter);
 
-        viewModel.getAlleSpiele().observe(getViewLifecycleOwner(), new Observer<List<Spiel>>() {
-            @Override
-            public void onChanged(List<Spiel> spiele) {
+        viewModel.getAlleSpiele().observe(getViewLifecycleOwner(), spiele -> {
+            if (spiele.isEmpty()) {
+                keineSpiele.setVisibility(TextView.VISIBLE);
+            } else {
                 adapter.setSpiele(spiele);
+                keineSpiele.setVisibility(TextView.GONE);
             }
+
         });
 
     }
