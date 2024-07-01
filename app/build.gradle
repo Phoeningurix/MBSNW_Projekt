@@ -58,4 +58,14 @@ dependencies {
     androidTestImplementation libs.room.testing
 
     androidTestImplementation libs.core.testing
+
+
+    androidTestImplementation libs.espresso.core.v340
+    androidTestImplementation libs.runner
+    androidTestImplementation libs.rules
+    androidTestImplementation libs.espresso.contrib
+    androidTestImplementation libs.fragment.testing
+    debugImplementation libs.fragment.testing.manifest
+    androidTestImplementation libs.espresso.intents
+
 }

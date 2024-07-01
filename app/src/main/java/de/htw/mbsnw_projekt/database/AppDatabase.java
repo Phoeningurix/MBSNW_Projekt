@@ -50,11 +50,13 @@ public abstract class AppDatabase extends RoomDatabase {
         // TODO: 30.06.2024 Zielorte hinzufügen
         ortListeDao.insert(new OrtListe(false, "Default"));
         zielortDao.insert(new Zielort(52.533579, 13.417889, "Wasserturm", 1));
-        zielortDao.insert(new Zielort(52.455100, 13.524743, "HTW Ufer", 1));
-        //zielortDao.insert(new Zielort(52.545587, 13.423519, "Käthe-Kollwitz-Gymnasium", 1));
-        //zielortDao.insert(new Zielort(52.543908, 13.424302, "Falafel Aladdin (Prenzlauer Berg)", 1));
+        //zielortDao.insert(new Zielort(52.455100, 13.524743, "HTW Ufer", 1));
+        zielortDao.insert(new Zielort(52.545587, 13.423519, "Käthe-Kollwitz-Gymnasium", 1));
+        zielortDao.insert(new Zielort(52.543908, 13.424302, "Falafel Aladdin (Prenzlauer Berg)", 1));
         zielortDao.insert(new Zielort(52.538491, 13.413205, "Kulturbrauerei", 1));
-        zielortDao.insert(new Zielort(52.521214, 13.413397, "Weltzeituhr", 1));
+        zielortDao.insert(new Zielort(52.543151, 13.427510, "Zeiss-Großplanetarium", 1));
+        zielortDao.insert(new Zielort(52.536348, 13.417331, "Kollwitzplatz", 1));
+        /*zielortDao.insert(new Zielort(52.521214, 13.413397, "Weltzeituhr", 1));
         zielortDao.insert(new Zielort(52.519782, 13.407215, "Neptunbrunnen", 1));
         zielortDao.insert(new Zielort(52.518899, 13.400410, "Berliner Dom", 1));
         zielortDao.insert(new Zielort(52.516455, 13.393937, "Bebelplatz", 1));
@@ -79,7 +81,7 @@ public abstract class AppDatabase extends RoomDatabase {
         zielortDao.insert(new Zielort(52.444206, 13.573872, "Schloss Köpenik", 1));
         zielortDao.insert(new Zielort(52.553037, 13.465142, "Weißer See", 1));
         zielortDao.insert(new Zielort(52.575748, 13.407418, "Schlosspark Pankow", 1));
-        zielortDao.insert(new Zielort(52.518542, 13.388624, "Friedrichstraße", 1));
+        zielortDao.insert(new Zielort(52.518542, 13.388624, "Friedrichstraße", 1));*/
     }
 
     private static void doInBackground(Runnable r) {
