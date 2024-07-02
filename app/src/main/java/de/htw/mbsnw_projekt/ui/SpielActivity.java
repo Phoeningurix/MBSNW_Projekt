@@ -128,7 +128,7 @@ public class SpielActivity extends AppCompatActivity {
 
         //Spiele Ausgeben
 
-        Toast.makeText(this, "Aktuelles Spiel: " + aktuellesSpiel, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Aktuelles Spiel: " + aktuellesSpiel, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onCreate: Aktuelles Spiel: " + aktuellesSpiel);
 
         App.getRepository().getSpiele().observeForever(spiele -> {

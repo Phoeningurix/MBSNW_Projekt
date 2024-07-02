@@ -50,9 +50,9 @@ public abstract class AppDatabase extends RoomDatabase {
         // TODO: 30.06.2024 Zielorte hinzufügen
         ortListeDao.insert(new OrtListe(false, "Default"));
         zielortDao.insert(new Zielort(52.533579, 13.417889, "Wasserturm", 1));
-        //zielortDao.insert(new Zielort(52.455100, 13.524743, "HTW Ufer", 1));
-        zielortDao.insert(new Zielort(52.545587, 13.423519, "Käthe-Kollwitz-Gymnasium", 1));
-        zielortDao.insert(new Zielort(52.543908, 13.424302, "Falafel Aladdin (Prenzlauer Berg)", 1));
+        zielortDao.insert(new Zielort(52.455100, 13.524743, "HTW Ufer", 1));
+        //zielortDao.insert(new Zielort(52.545587, 13.423519, "Käthe-Kollwitz-Gymnasium", 1));
+        //zielortDao.insert(new Zielort(52.543908, 13.424302, "Falafel Aladdin (Prenzlauer Berg)", 1));
         zielortDao.insert(new Zielort(52.538491, 13.413205, "Kulturbrauerei", 1));
         zielortDao.insert(new Zielort(52.543151, 13.427510, "Zeiss-Großplanetarium", 1));
         zielortDao.insert(new Zielort(52.536348, 13.417331, "Kollwitzplatz", 1));
