@@ -101,7 +101,7 @@ public interface Repository {
 
     LiveData<List<OrtListe>> getAllOrtslisten();
 
-    LiveData<List<Zielort>> getAlleZielorte(int ortlisteId);
+    public void getAlleZielorte(int ortlisteId, Consumer<List<Zielort>> task);
 
     void getOrtListe(int zielortId, Consumer<OrtListe> task);
 

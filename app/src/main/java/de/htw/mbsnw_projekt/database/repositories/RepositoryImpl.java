@@ -262,8 +262,8 @@ public class RepositoryImpl extends AbstractRepository {
     }
 
     @Override
-    public LiveData<List<Zielort>> getAlleZielorte(int ortlisteId) {
-        return ortListeDao.getAlleZielorte(ortlisteId);
+    public void getAlleZielorte(int ortlisteId, Consumer<List<Zielort>> task) {
+        doInBackground(() -> ortListeDao.getAlleZielorte(ortlisteId), task);
     }
 
     @Override

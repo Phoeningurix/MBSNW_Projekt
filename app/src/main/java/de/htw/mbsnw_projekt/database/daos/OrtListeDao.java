@@ -28,7 +28,7 @@ public interface OrtListeDao {
     LiveData<List<OrtListe>> getAllOrtslisten();
 
     @Query("SELECT * FROM zielort WHERE ort_liste_id = :ortlisteId ORDER BY name")
-    LiveData<List<Zielort>> getAlleZielorte(int ortlisteId);
+    List<Zielort> getAlleZielorte(int ortlisteId);
 
     @Query("SELECT ort_liste.* FROM ort_liste JOIN zielort ON zielort.ort_liste_id = ort_liste.ort_liste_id WHERE zielort.zielort_id = :zielortId")
     OrtListe getOrtListe(int zielortId);

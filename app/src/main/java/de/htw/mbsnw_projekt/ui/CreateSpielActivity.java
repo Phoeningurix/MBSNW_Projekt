@@ -124,6 +124,7 @@ public class CreateSpielActivity extends AppCompatActivity {
         long time = timeLimitSeekBar.getProgress() *1000*60*60L;
         Spiel neuesSpiel = new Spiel(LocalDateTime.now(), null, 0, time);
         viewModel.createSpiel(neuesSpiel, erstelltesSpiel -> {
+            Log.d(TAG, "onCreateSpielButtonClicked: Spiel erstellt: " + erstelltesSpiel.getId());
             zieleErstellen(erstelltesSpiel, zielAnzahlSeekBar.getProgress(), ortlisteID);
 
             Log.d(TAG, "onCreateSpielButtonClicked: Erstelltes Spiel: " + erstelltesSpiel);
@@ -137,7 +138,7 @@ public class CreateSpielActivity extends AppCompatActivity {
 
     private void zieleErstellen(Spiel erstelltesSpiel, int anzahl, int ortliste) {
         // TODO: 02.06.2024 Ziele aus spezifischen Ortlisten
-        repository.getAlleZielorte(ortliste).observe(this, zielorte -> {
+        repository.getAlleZielorte(ortliste, zielorte -> {
             Random r = new Random();
             Log.d(TAG, "zieleErstellen: Erstelle " + anzahl + " Ziele aus Liste mit " + zielorte.size() + " Zielen");
             for (int i = 0; i < anzahl; i++) {
@@ -147,6 +148,7 @@ public class CreateSpielActivity extends AppCompatActivity {
                 }
                 Zielort zielort = zielorte.get(r.nextInt(zielorte.size()));
                 zielorte.remove(zielort);
+                Log.d(TAG, "zieleErstellen: Zielort: " + zielort.getId());
                 repository.insert(new Ziel(zielort.getId(), erstelltesSpiel.getId(), i, null));
             }
         });
